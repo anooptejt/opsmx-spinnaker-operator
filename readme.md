@@ -1,14 +1,14 @@
-### SPINNAKER OPERATOR 
+# SPINNAKER OPERATOR 
 
 This is a procedural document to spin up Spinnaker services through OpenShift Operator using Helm Charts
 
-# Prerequisites: 
+### Prerequisites: 
 
 1. oc/kubectl binary and kubeconfig file, user should be having cluster-admin privilege
 2. Openshift 3.9 or above
 
 
-# Procedure to deploy the "OpsMx-Spinnaker-Operator": 
+### Procedure to deploy the "OpsMx-Spinnaker-Operator": 
 
 1. Start by unzipping  the folder (named as opsmx-spinnaker-operator)
 
