@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opsmx-spinnaker-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: opsmx-spinnaker-operator
+  template:
+    metadata:
+      labels:
+        name: opsmx-spinnaker-operator
+    spec:
+      serviceAccountName: opsmx-spinnaker-operator
+      containers:
+        - name: opsmx-spinnaker-operator
+          # Replace this with the built image name
+          image: opsmx11/opsmx-spinnaker-operator:v0.1
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "opsmx-spinnaker-operator"
