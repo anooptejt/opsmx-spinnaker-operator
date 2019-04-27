@@ -48,7 +48,7 @@ rules:
 - apiGroups:
   - apps
   resourceNames:
-  - spinnaker-oc-operator
+  - opsmx-spinnaker-operator
   resources:
   - deployments/finalizers
   verbs:

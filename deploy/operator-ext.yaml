@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: opsmx-spinnaker-operator
@@ -16,7 +16,7 @@ spec:
       containers:
         - name: opsmx-spinnaker-operator
           # Replace this with the built image name
-          image: opsmx11/spinnaker-operator:latest
+          image: opsmx11/opsmx-spinnaker-operator:v0.1
           imagePullPolicy: Always
           env:
             - name: WATCH_NAMESPACE

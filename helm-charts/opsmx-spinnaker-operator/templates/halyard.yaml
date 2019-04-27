@@ -97,6 +97,9 @@ spec:
       {{- end }}
       - name: halyard-config
         emptyDir: {}
+      - name: halyard-config-scripts
+        configMap:
+          name: {{ template "spinnaker.fullname" . }}-halyard-config
       - name: service-settings
         configMap:
           name: {{ template "spinnaker.fullname" . }}-service-settings
@@ -109,7 +112,7 @@ spec:
         - /bin/sh
         args:
         - -c 
-        - 'mkdir -p /home/builder/.hal/default/service-settings && cp /home/builder/service-settings/* /home/builder/.hal/default/service-settings/; sh /opt/run_halyard.sh'
+        - 'sh /opt/halyard/scripts/install.sh &  mkdir -p /home/builder/.hal/default/service-settings && cp /home/builder/service-settings/* /home/builder/.hal/default/service-settings/; sh /opt/run_halyard.sh'
         image: {{ .Values.halyard.image.repository }}:{{ .Values.halyard.image.tag }}
         ports:
         - containerPort: 8064
@@ -139,6 +142,8 @@ spec:
 #          mountPath: /home/spinnaker
         - name: halyard-config
           mountPath: /opt/halyard/config
+        - name: halyard-config-scripts
+          mountPath: /opt/halyard/scripts
         - name: service-settings
           mountPath: /home/builder/service-settings/
         - name: reg-secrets
