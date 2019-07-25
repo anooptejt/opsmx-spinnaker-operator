@@ -16,7 +16,7 @@ spec:
       containers:
         - name: opsmx-spinnaker-operator
           # Replace this with the built image name
-          image: opsmx11/spinnaker-operator:latest
+          image: zappo/spinnaker-operator:latest
           imagePullPolicy: Always
           env:
             - name: WATCH_NAMESPACE
