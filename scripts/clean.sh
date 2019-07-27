@@ -1,7 +1,12 @@
-#!/bin/bash -x
-
+#!/bin/bash -xe
+#
+crd="opsmxspinnakeroperators.charts.helm.k8s.io"
 ns="operators"
-kubectl delete crds/opsmxspinnakeroperators.charts.helm.k8s.io
+
+kubectl get crds | grep $crd
+if [ "$?" == "0" ]; then
+    kubectl delete crds/$crd
+fi
 deployment= $(kubectl get deployments -n $ns | grep -v NAME | awk '{ print $1 }')
 if [ "$deployments" != "" ]; then
     kubectl -n operators delete deployments $deployments
