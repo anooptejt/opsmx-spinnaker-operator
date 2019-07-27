@@ -1,13 +1,13 @@
 apiVersion: v1
-appVersion: 1.13.1
+appVersion: latest
 description: Open source, multi-cloud continuous delivery platform for releasing software
-  changes with high velocity and confidence.
+  changes with high velocity and confidence. Running on Red Hat *beta*
 home: http://spinnaker.io/
 icon: https://pbs.twimg.com/profile_images/669205226994319362/O7OjwPrh_400x400.png
 maintainers:
-- email: sandesh@opsmx.com
-  name: j-sandy
+- email: funs@opsmx.io
+  name: Funs
 name: opsmx-spinnaker-operator
 sources:
 - https://github.com/spinnaker
-version: 1.13.1
+version: latest
