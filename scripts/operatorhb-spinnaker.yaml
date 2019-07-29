@@ -1,0 +1,38 @@
+apiVersion: charts.helm.k8s.io/v1alpha1
+kind: SpinnakerOperator
+metadata:
+  name: spin-install
+spec:
+  halyard:
+    spinnakerVersion: 1.13.1
+    image:
+      repository: opsmx11/operator-halyard
+      tag: 1.18.0
+  dockerRegistries:
+    - name: dockerhub
+      address: index.docker.io
+      repositories:
+        - library/alpine
+        - library/ubuntu
+        - library/centos
+        - library/nginx
+  spinnakerFeatureFlags:
+    - artifacts
+    - jobs
+  minio:
+    enabled: true
+    imageTag: RELEASE.2018-06-09T02-18-09Z
+    serviceType: ClusterIP
+    accessKey: spinnakeradmin
+    secretKey: spinnakeradmin
+    bucket: spinnaker
+    nodeSelector: {}
+    persistence:
+      enabled: false
+  rbac:
+    create: false
+  serviceAccount:
+    create: false
+    halyardName: spinnaker-operator
+    spinnakerName: null
+
