@@ -112,7 +112,7 @@ spec:
         - /bin/sh
         args:
         - -c
-        - 'sh /opt/halyard/scripts/install.sh & cp /home/builder/service-settings/* /root/.hal/default/service-settings/; sh /opt/run_halyard.sh'
+        - 'sh /opt/halyard/scripts/install.sh & cp /home/builder/service-settings/*.y* /root/.hal/default/service-settings/; sh /opt/run_halyard.sh'
         image: {{ .Values.halyard.image.repository }}:{{ .Values.halyard.image.tag }}
         ports:
         - containerPort: 8064
