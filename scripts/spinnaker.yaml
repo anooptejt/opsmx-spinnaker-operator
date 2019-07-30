@@ -6,8 +6,8 @@ spec:
   halyard:
     spinnakerVersion: 1.13.1
     image:
-      repository: opsmx11/operator-halyard
-      tag: 1.18.0
+      repository: zappo/ubi8-operator-halyard
+      tag: latest
   dockerRegistries:
     - name: dockerhub
       address: index.docker.io
