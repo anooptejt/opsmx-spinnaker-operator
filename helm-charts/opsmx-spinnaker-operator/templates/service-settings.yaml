@@ -6,7 +6,7 @@ metadata:
 {{ include "spinnaker.standard-labels" . | indent 4 }}
 data:
   redis.yml: |-
-    artifactId: opsmx11/operator-redis:v0.0.3
+    artifactId: opsmx11/ubi8-redis:v0.0.3
     enabled: true
   gate.yml: |-
     kubernetes:
@@ -14,11 +14,11 @@ data:
       useExecHealthCheck: false
       serviceType: NodePort
     {{- end }}
-    artifactId: opsmx11/operator-gate:v1.7.0
+    artifactId: zappo/ubi8-gate:master
     host: 0.0.0.0
   deck.yml: |-
     host: 0.0.0.0
-    artifactId: opsmx11/operator-deck:v2.6.1
+    artifactId: zappo/ubi8-deck:master
     env:
       API_HOST: http://spin-gate.{{ .Release.Namespace }}:8084
     kubernetes:
@@ -27,8 +27,18 @@ data:
       serviceType: NodePort
     {{- end }}
   front50.yml: |-
-    artifactId: opsmx11/operator-front50:v0.16.1
+    artifactId: zappo/ubi8-front50:master
   fiat.yml: |-
-    artifactId: opsmx11/operator-fiat:v1.4.0
-
-
+    artifactId: zappo/ubi8-fiat:master
+  clouddriver.yml: |-
+    artifactId: zappo/ubi8-clouddriver:master
+  echo.yml: |-
+    artifactId: zappo/ubi8-echo:master
+  igor.yml: |-
+    artifactId: zappo/ubi8-igor:master
+  rosco.yml: |-
+    artifactId: zappo/ubi8-rosco:master
+  orca.yml: |-
+    artifactId: zappo/ubi8-orca:master
+  kayenta.yml: |-
+    artifactId: zappo/ubi8-kayenta:master
