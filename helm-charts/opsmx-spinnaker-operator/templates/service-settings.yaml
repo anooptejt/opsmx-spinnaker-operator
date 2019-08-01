@@ -6,7 +6,7 @@ metadata:
 {{ include "spinnaker.standard-labels" . | indent 4 }}
 data:
   redis.yml: |-
-    artifactId: opsmx11/ubi8-redis:v0.0.3
+    artifactId: zappo/ubi8-redis:4.0.14
     enabled: true
   gate.yml: |-
     kubernetes:
