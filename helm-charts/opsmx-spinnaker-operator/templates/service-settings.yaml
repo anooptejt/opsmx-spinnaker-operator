@@ -27,7 +27,7 @@ data:
       serviceType: NodePort
     {{- end }}
   front50.yml: |-
-    artifactId: zappo/ubi8-front50:master
+    artifactId: zappo/ubi8-os-front50:master
   fiat.yml: |-
     artifactId: zappo/ubi8-fiat:master
   clouddriver.yml: |-

@@ -33,6 +33,6 @@ spec:
     create: false
   serviceAccount:
     create: false
-    halyardName: spinnaker-operator
+    halyardName: opsmx-spinnaker-operator
     spinnakerName: null
 
