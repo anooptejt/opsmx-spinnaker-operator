@@ -19,5 +19,5 @@ done
 kubectl -n $ns delete -f  "../deploy/service_account.yaml"
 kubectl -n $ns delete -f  "../deploy/role.yaml"
 kubectl -n $ns delete -f  "../deploy/role_binding.yaml"
-miniskube ssh "docker rmi zappo/ubi8-operator-halyard zappo/spinnaker-operator"
+minikube ssh "docker rmi zappo/ubi8-operator-halyard zappo/spinnaker-operator"
 

@@ -18,7 +18,7 @@ data:
     host: 0.0.0.0
   deck.yml: |-
     host: 0.0.0.0
-    artifactId: zappo/ubi8-deck:master
+    artifactId: zappo/ubi8-os-deck:master
     env:
       API_HOST: http://spin-gate.{{ .Release.Namespace }}:8084
     kubernetes:
