@@ -1,12 +1,11 @@
 #!/bin/bash -xe
-kubectl create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_crd.yaml -n operators
-kubectl create -f ../deploy/service_account.yaml -n operators
-kubectl create -f ../deploy/role.yaml -n operators
-kubectl create -f ../deploy/role_binding.yaml -n operators
-kubectl create -f ../deploy/operator.yaml -n operators
-# kubectl create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_cr.yaml -n operators
-kubectl create -f spinnaker.yaml -n operators
-
+oc create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_crd.yaml -n operators
+oc create -f ../deploy/service_account.yaml -n operators
+oc create -f ../deploy/role.yaml -n operators
+oc create -f ../deploy/role_binding.yaml -n operators
+oc create -f ../deploy/operator.yaml -n operators
+# oc create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_cr.yaml -n operators
+oc create -f spinnaker.yaml -n operators
 TRUE=true
 while $TRUE; do
   kubectl -n operators get pods | grep spin-deck
@@ -27,4 +26,3 @@ for i in ui api; do
   kubectl -n operators exec -ti $HALPOD -- bash -c "$cmd"
 done
 kubectl -n operators exec -ti $HALPOD -- bash -c "hal deploy apply"
-

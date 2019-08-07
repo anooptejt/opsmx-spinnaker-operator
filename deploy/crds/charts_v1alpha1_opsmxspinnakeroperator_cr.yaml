@@ -135,7 +135,7 @@ spec:
   # Redis password to use for the in-cluster redis service
   # Enable redis to use in-cluster redis
   redis:
-    enabled: false
+    enabled: true
     # External Redis option will be enabled if in-cluster redis is disabled
     external:
       host: "<EXTERNAL-REDIS-HOST-NAME>"
@@ -148,7 +148,7 @@ spec:
   # Uncomment if you don't want to create a PVC for redis
     master:
       persistence:
-        enabled: false
+        enabled: true
   
   # Minio access/secret keys for the in-cluster S3 usage
   # Minio is not exposed publically
