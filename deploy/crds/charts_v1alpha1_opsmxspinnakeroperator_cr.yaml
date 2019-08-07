@@ -6,7 +6,7 @@ spec:
   # Default values copied from <project_dir>/helm-charts/opsmx-spinnaker-operator/values.yaml
   
   halyard:
-    spinnakerVersion: 1.13.1
+    spinnakerVersion: 1.15.1
     image:
       repository: zappo/ubi8-operator-halyard
       tag: latest
