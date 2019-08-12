@@ -30,8 +30,6 @@ while $TRUE; do
   sleep 1
 done
 minishift ssh "docker rmi \
-    zappo/ubi8-operator-halyard \
-    zappo/spinnaker-operator \
-    zappo/ubi8-redis:4.0.14 \
-"
+    zappo/ubi8-oes-operator-halyard \
+    zappo/spinnaker-operator"
 
