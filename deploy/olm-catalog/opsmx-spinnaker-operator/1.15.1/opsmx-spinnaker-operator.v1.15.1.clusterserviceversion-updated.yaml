@@ -5,11 +5,11 @@ metadata:
     capabilities: Basic Install
     categories: "Integration & Delivery"
     certified: "false"
-    containerImage: docker.io/zappo/spinnaker-operator:latest
+    containerImage: docker.io/zappo/spinnaker-operator:1.15.1-1
     description: Spinnaker is an Open Source, multi-cloud Continuous delivery platform to perform software releases with high velocity and confidence.
     support: OpsMx
     createdAt: 2019-04-08T19:49:35Z
-    alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1alpha1","kind":"OpsmxSpinnakerOperator","metadata":{"name":"op-spin"},"spec":{"halyard":{"spinnakerVersion":"1.15.1","image":{"repository":"zappo/ubi8-oes-operator-halyard","tag":"latest"}},"dockerRegistries":[{"name":"dockerhub","address":"index.docker.io","repositories":["library/alpine","library/ubuntu","library/centos","library/nginx"]}],"spinnakerFeatureFlags":["artifacts","jobs"],"zappo/ubi8-minio":{"enabled":true,"imageTag":"latest","serviceType":"ClusterIP","accessKey":"spinnakeradmin","secretKey":"spinnakeradmin","bucket":"spinnaker","nodeSelector":{},"persistence":{"enabled":false}},"rbac":{"create":false},"serviceAccount":{"create":false,"halyardName":"opsmx-spinnaker-operator","spinnakerName":null}}}]'
+    alm-examples: '[{"apiVersion":"charts.helm.k8s.io/v1alpha1","kind":"OpsmxSpinnakerOperator","metadata":{"name":"op-spin"},"spec":{"halyard":{"spinnakerVersion":"1.15.1","image":{"repository":"zappo/ubi8-oes-operator-halyard","tag":"1.15.1-1"}},"dockerRegistries":[{"name":"dockerhub","address":"index.docker.io","repositories":["library/alpine","library/ubuntu","library/centos","library/nginx"]}],"spinnakerFeatureFlags":["artifacts","jobs"],"zappo/ubi8-minio":{"enabled":true,"imageTag":"version-09082019","serviceType":"ClusterIP","accessKey":"spinnakeradmin","secretKey":"spinnakeradmin","bucket":"spinnaker","nodeSelector":{},"persistence":{"enabled":false}},"rbac":{"create":false},"serviceAccount":{"create":false,"halyardName":"opsmx-spinnaker-operator","spinnakerName":null}}}]'
   name: opsmx-spinnaker-operator.v1.15.1
   namespace: placeholder
 spec:
@@ -47,7 +47,7 @@ spec:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: opsmx-spinnaker-operator
-                image: docker.io/zappo/spinnaker-operator:latest
+                image: docker.io/zappo/spinnaker-operator:1.15.1-1
                 imagePullPolicy: Always
                 name: opsmx-spinnaker-operator
                 resources: {}

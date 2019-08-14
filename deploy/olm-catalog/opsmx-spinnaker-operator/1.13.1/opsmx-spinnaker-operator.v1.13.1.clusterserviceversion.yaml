@@ -41,7 +41,7 @@ spec:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: opsmx-spinnaker-operator
-                image: zappo/spinnaker-operator:latest
+                image: zappo/spinnaker-operator:1.15.1-1
                 imagePullPolicy: Always
                 name: opsmx-spinnaker-operator
                 resources: {}
