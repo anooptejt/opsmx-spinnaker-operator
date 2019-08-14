@@ -11,4 +11,4 @@ if [ "$new" == "" ]; then
 fi
 
 pre="spinnaker-operator:"
-echo perl -pi -e "s/${pre}${old}/${pre}${new}/g" $(find ../ -type f | xargs grep $old | grep -v git | awk -F: '{ print $1 }')
+perl -pi -e "s/${pre}${old}/${pre}${new}/g" $(find ../ -type f | xargs grep $old | grep -v git | awk -F: '{ print $1 }')
