@@ -31,5 +31,5 @@ while $TRUE; do
 done
 minishift ssh "docker rmi \
     zappo/ubi8-oes-operator-halyard \
-    zappo/spinnaker-operator"
+    zappo/spinnaker-operator:1.15.1-1"
 
