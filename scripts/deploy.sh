@@ -18,7 +18,7 @@ while $TRUE; do
   sleep 1
 done
 kubectl -n operators patch svc spin-deck -p '{"spec":{"type": "NodePort" }}'
-IP=$(minishift ip)
+IP=$(minikube ip)
 HALPOD=$(kubectl -n operators get pods | grep halyard | awk '{ print $1 }')
 HALPORT=$(kubectl -n operators get svc/spin-deck | perl -ne 'if (/\d+:(\d+)/) { print $1 }')
 for i in ui api; do
