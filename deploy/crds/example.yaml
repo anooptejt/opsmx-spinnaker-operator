@@ -7,7 +7,7 @@ spec:
     spinnakerVersion: 1.15.1
     image:
       repository: zappo/ubi8-oes-operator-halyard
-      tag: 1.15.1-2
+      tag: 1.15.1-1
   dockerRegistries:
   - name: dockerhub
     address: index.docker.io
