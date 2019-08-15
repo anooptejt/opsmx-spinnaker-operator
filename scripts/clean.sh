@@ -39,7 +39,7 @@ while $TRUE; do
   echo "Waiting for halyard to go"
   sleep 1
 done
-images=$($type ssh "docker images| grep operator | awk '{ print \$3 }' | tr '\n' ' '")
+images=$($type ssh "docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' '")
 for i in $images; do
-  $type ssh "docker rmi $i"
+  $type ssh "docker rmi $i --force"
 done

@@ -1,13 +1,13 @@
 apiVersion: charts.helm.k8s.io/v1alpha1
-kind: SpinnakerOperator
+kind: OpenEnterpriseSpinnakerOperator
 metadata:
-  name: spin-install
+  name: oes-install
 spec:
   halyard:
-    spinnakerVersion: 1.13.1
+    spinnakerVersion: 1.15.1
     image:
-      repository: opsmx11/operator-halyard
-      tag: 1.18.0
+      repository: zappo/ubi8-oes-operator-halyard
+      tag: 1.15.1-1
   dockerRegistries:
     - name: dockerhub
       address: index.docker.io
@@ -21,7 +21,7 @@ spec:
     - jobs
   minio:
     enabled: true
-    imageTag: RELEASE.2018-06-09T02-18-09Z
+    imageTag: version-09082019
     serviceType: ClusterIP
     accessKey: spinnakeradmin
     secretKey: spinnakeradmin
@@ -33,6 +33,6 @@ spec:
     create: false
   serviceAccount:
     create: false
-    halyardName: spinnaker-operator
+    halyardName: open-enterprise-spinnaker-operator
     spinnakerName: null
 

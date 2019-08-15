@@ -8,17 +8,18 @@ if [ "$type" != "k8s" -a "$type" != "oc" ]; then
   exit 1
 elif [ "$type" == "k8s" ]; then
   type="kubectl"
+  mini="minikube"
 else
   type="oc"
+  mini="minishift"
 fi
 
-#$type create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_crd.yaml -n operators
-$type create -f ../deploy/crds/open-enterprise-spinnaker_crd.yaml
+$type create -f ../bundle/open-enterprise-spinnaker_crd.yaml
 $type create -f ../deploy/service_account.yaml -n operators
 $type create -f ../deploy/role.yaml -n operators
 $type create -f ../deploy/role_binding.yaml -n operators
 $type create -f ../deploy/operator.yaml -n operators
-$type create -f spinnaker.yaml -n operators
+$type create -f ../deploy/oes-deploy-operator.yaml -n operators
 
 TRUE=true
 while $TRUE; do
@@ -31,7 +32,7 @@ while $TRUE; do
   sleep 1
 done
 kubectl -n operators patch svc spin-deck -p '{"spec":{"type": "NodePort" }}'
-IP=$(minikube ip)
+IP=$($mini ip)
 HALPOD=$(kubectl -n operators get pods | grep halyard | awk '{ print $1 }')
 HALPORT=$(kubectl -n operators get svc/spin-deck | perl -ne 'if (/\d+:(\d+)/) { print $1 }')
 for i in ui api; do
@@ -42,5 +43,5 @@ done
 kubectl -n operators exec -ti $HALPOD -- bash -c "hal deploy apply"
 NodePort=$(kubectl get svc/spin-deck -n operators -o yaml | grep nodePor | awk '{ print $3 }')
 # check this url, gives 500 till done
-# curl http://$IP:$NodePort/gate/projects^
+# curl http://$IP:$NodePort/gate/projects
 echo "Deck is running on http://$IP:$NodePort/"
