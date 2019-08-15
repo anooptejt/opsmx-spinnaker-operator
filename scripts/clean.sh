@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash 
 #
 crd="opsmxspinnakeroperators.charts.helm.k8s.io"
 ns="operators"
@@ -7,12 +7,10 @@ type=$1
 if [ "$type" != "k8s" -a "$type" != "oc" ]; then
   echo "$0: (k8s|oc)"
   exit 1
+elif [ "$type" == "k8s" ]; then
+  type="minikube"
 else
-  if [ "type" == "k8s" ]; then
-    type="minikube"
-  else
-    type="minishift"
-  fi
+  type="minishift"
 fi
 
 kubectl get crds | grep $crd
@@ -41,6 +39,7 @@ while $TRUE; do
   echo "Waiting for halyard to go"
   sleep 1
 done
-$type ssh "for i in `docker images| grep operator | awk '{print $3 }'`; do \
-    docker rmi $i"
-
+images=$($type ssh "docker images| grep operator | awk '{ print \$3 }' | tr '\n' ' '")
+for i in $images; do
+  $type ssh "docker rmi $i"
+done

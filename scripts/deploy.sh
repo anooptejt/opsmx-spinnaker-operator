@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash 
 #
 # 
 #
@@ -6,12 +6,10 @@ type=$1
 if [ "$type" != "k8s" -a "$type" != "oc" ]; then
   echo "$0: (k8s|oc)"
   exit 1
+elif [ "$type" == "k8s" ]; then
+  type="kubectl"
 else
-  if [ "type" == "k8s" ]; then
-    type="kubectl"
-  else
-    type="oc"
-  fi
+  type="oc"
 fi
 
 
@@ -44,4 +42,4 @@ for i in ui api; do
 done
 kubectl -n operators exec -ti $HALPOD -- bash -c "hal deploy apply"
 NodePort=$(kubectl get svc/spin-deck -n operators -o yaml | grep nodePor | awk '{ print $3 }')
-echo "Deck is running on http://$IP:$NodePort/
+echo "Deck is running on http://$IP:$NodePort/"
