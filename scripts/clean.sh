@@ -1,6 +1,6 @@
 #!/bin/bash 
 #
-crd="opsmxspinnakeroperators.charts.helm.k8s.io"
+crd="spinnakeroperator"
 ns="operators"
 
 type=$1
