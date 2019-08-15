@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   creationTimestamp: null
-  name: opsmx-spinnaker-operator
+  name: open-enterprise-spinnaker-operator
 rules:
 - apiGroups:
   - batch
@@ -48,7 +48,7 @@ rules:
 - apiGroups:
   - apps
   resourceNames:
-  - opsmx-spinnaker-operator
+  - open-enterprise-spinnaker-operator
   resources:
   - deployments/finalizers
   verbs:

@@ -12,13 +12,12 @@ else
   type="oc"
 fi
 
-
-$type create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_crd.yaml -n operators
+#$type create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_crd.yaml -n operators
+$type create -f ../deploy/crds/open-enterprise-spinnaker_crd.yaml
 $type create -f ../deploy/service_account.yaml -n operators
 $type create -f ../deploy/role.yaml -n operators
 $type create -f ../deploy/role_binding.yaml -n operators
 $type create -f ../deploy/operator.yaml -n operators
-# kubectl create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_cr.yaml -n operators
 $type create -f spinnaker.yaml -n operators
 
 TRUE=true

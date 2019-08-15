@@ -1,7 +1,7 @@
 apiVersion: charts.helm.k8s.io/v1alpha1
-kind: OpsmxSpinnakerOperator
+kind: OpenEnterpriseSpinnakerOperator
 metadata:
-  name: op-spin
+  name: oes
 spec:
   # Default values copied from <project_dir>/helm-charts/opsmx-spinnaker-operator/values.yaml
   
@@ -202,6 +202,6 @@ spec:
     create: false
     # The name of the ServiceAccounts to use.
     # If left blank it is auto-generated from the fullname of the release
-    halyardName: opsmx-spinnaker-operator
+    halyardName: open-enterprise-spinnaker-operator
     spinnakerName:
   

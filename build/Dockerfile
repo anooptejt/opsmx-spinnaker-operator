@@ -1,11 +1,11 @@
 FROM quay.io/operator-framework/helm-operator:v0.10.0
 
-LABEL name='spinnaker-operator'
+LABEL name='open-enterprise-spinnaker-operator'
 LABEL vendor='OpsMx'
 LABEL release='3'
 LABEL version='1.15.1'
-LABEL summary='Red Hat certified Open Enterprise Operator for deploying Spinnaker'
-LABEL description='Certified Open Enterprise Spinnaker is an Enterprise grade, Red Hat certified and OpsMx supported release of the popular and critically acclaimed Continuous Delivery platform Spinnaker'
+LABEL summary='Red Hat certified Operator for deploying Red Hat certified Open Enterprise Spinnaker'
+LABEL description='Open Enterprise Spinnaker is an Enterprise grade, Red Hat certified and OpsMx supported release of the popular and critically acclaimed Continuous Delivery platform Spinnaker'
 LABEL maintainer='delivery-engineering@opsmx.io'
 
 COPY helm-charts/ ${HOME}/helm-charts/

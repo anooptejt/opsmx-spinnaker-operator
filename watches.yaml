@@ -1,5 +1,5 @@
 ---
 - version: v1alpha1
   group: charts.helm.k8s.io
-  kind: OpsmxSpinnakerOperator
-  chart: /opt/helm/helm-charts/opsmx-spinnaker-operator
+  kind: OpenEnterpriseSpinnakerOperator
+  chart: /opt/helm/helm-charts/open-enterprise-spinnaker-operator

@@ -1,7 +1,7 @@
 apiVersion: charts.helm.k8s.io/v1alpha1
-kind: OpsmxSpinnakerOperator
+kind: OpenEnterpriseSpinnakerOperator
 metadata:
-  name: op-spin
+  name: oes-
 spec:
   halyard:
     spinnakerVersion: 1.15.1
@@ -33,5 +33,5 @@ spec:
     create: false
   serviceAccount:
     create: false
-    halyardName: opsmx-spinnaker-operator
+    halyardName: open-enterprise-spinnaker-operator
     spinnakerName:
