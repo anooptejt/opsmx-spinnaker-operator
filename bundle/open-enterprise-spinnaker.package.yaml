@@ -1,4 +1,4 @@
 packageName: open-enterprise-spinnaker
 channels:
   - name: alpha
-    currentCSV: opsmx-spinnaker-operator.v1.15.1
+    currentCSV: open-enterprise-spinnaker.v1.15.1
