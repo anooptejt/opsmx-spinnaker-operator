@@ -1,11 +1,27 @@
 #!/bin/bash -xe
-kubectl create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_crd.yaml -n operators
-kubectl create -f ../deploy/service_account.yaml -n operators
-kubectl create -f ../deploy/role.yaml -n operators
-kubectl create -f ../deploy/role_binding.yaml -n operators
-kubectl create -f ../deploy/operator.yaml -n operators
+#
+# 
+#
+type=$1
+if [ "$type" != "k8s" -a "$type" != "oc" ]; then
+  echo "$0: (k8s|oc)"
+  exit 1
+else
+  if [ "type" == "k8s" ]; then
+    type="kubectl"
+  else
+    type="oc"
+  fi
+fi
+
+
+$type create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_crd.yaml -n operators
+$type create -f ../deploy/service_account.yaml -n operators
+$type create -f ../deploy/role.yaml -n operators
+$type create -f ../deploy/role_binding.yaml -n operators
+$type create -f ../deploy/operator.yaml -n operators
 # kubectl create -f ../deploy/crds/charts_v1alpha1_opsmxspinnakeroperator_cr.yaml -n operators
-kubectl create -f spinnaker.yaml -n operators
+$type create -f spinnaker.yaml -n operators
 
 TRUE=true
 while $TRUE; do

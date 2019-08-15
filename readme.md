@@ -1,4 +1,4 @@
-# OPSMX SPINNAKER OPERATOR 
+# Open Enterprise Spinnaker
 
 This is a procedural document to spin up Spinnaker services through OpenShift Operator using Helm Charts
 
