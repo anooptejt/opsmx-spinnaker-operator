@@ -41,4 +41,6 @@ for i in ui api; do
 done
 kubectl -n operators exec -ti $HALPOD -- bash -c "hal deploy apply"
 NodePort=$(kubectl get svc/spin-deck -n operators -o yaml | grep nodePor | awk '{ print $3 }')
+# check this url, gives 500 till done
+# curl http://$IP:$NodePort/gate/projects^
 echo "Deck is running on http://$IP:$NodePort/"

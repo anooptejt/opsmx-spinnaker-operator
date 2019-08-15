@@ -13,9 +13,9 @@ else
   type="minishift"
 fi
 
-kubectl get crds | grep $crd
+ncrd=$(kubectl get crds | grep $crd | awk '{ print $1 }')
 if [ "$?" == "0" ]; then
-    kubectl delete crds/$crd
+    kubectl delete crds/$ncrd
 fi
 deployments=$(kubectl get deployments -n $ns | grep -v NAME | awk '{ print $1 }')
 if [ "$deployments" != "" ]; then
