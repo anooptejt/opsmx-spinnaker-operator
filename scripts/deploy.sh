@@ -18,8 +18,8 @@ $type create -f ../bundle/open-enterprise-spinnaker_crd.yaml
 $type create -f ../deploy/service_account.yaml -n operators
 $type create -f ../deploy/role.yaml -n operators
 $type create -f ../deploy/role_binding.yaml -n operators
-$type create -f ../deploy/operator.yaml -n operators
-$type create -f ../deploy/oes-deploy-operator.yaml -n operators
+$type create -f ../deploy/deploy-operator.yaml -n operators
+$type create -f ../deploy/deploy-oes.yaml -n operators
 
 TRUE=true
 while $TRUE; do
