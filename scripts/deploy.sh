@@ -18,14 +18,14 @@ ns=${2:-spin}
 cat <<EOF > ../deploy/namespace.yaml
 { "apiVersion": "v1", "kind": "Namespace", "metadata": { "name": "$ns", "labels": { "name": "$ns"} } }
 EOF
-$type create -f ../deploy/namespace.yaml
+$type create -f ./namespace.yaml
 
-$type create -f ../bundle/open-enterprise-spinnaker_crd.yaml
+$type create -f ../deploy/crds/open-enterprise-spinnaker_crd.yaml
 $type create -f ../deploy/service_account.yaml -n $ns
 $type create -f ../deploy/role.yaml -n $ns
 $type create -f ../deploy/role_binding.yaml -n $ns
-$type create -f ../deploy/deploy-operator.yaml -n $ns
-$type create -f ../deploy/deploy-oes.yaml -n $ns
+$type create -f ../deploy/operator.yaml -n $ns
+$type create -f ../deploy/crds/deploy-oes.yaml -n $ns
 
 TRUE=true
 while $TRUE; do

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 crd="spinnakeroperator"
-ns=$(cat ../deploy/namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
+ns=$(cat ./namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
 type=$1
 
 if [ "$type" != "k8s" -a "$type" != "oc" ]; then
@@ -15,7 +15,10 @@ fi
 
 ncrd=$(kubectl get crds | grep $crd | awk '{ print $1 }')
 if [ "$?" == "0" ]; then
+    # patch so delete gets easy...
+    kubectl patch crds/$ncrd -p '{"metadata":{"finalizers":[]}}' --type=merge
     kubectl delete crds/$ncrd
+
 fi
 deployments=$(kubectl get deployments -n $ns | grep -v NAME | awk '{ print $1 }')
 if [ "$deployments" != "" ]; then
@@ -39,7 +42,7 @@ while $TRUE; do
   echo "Waiting for pods to go"
   sleep 1
 done
-kubectl delete -f "../deploy/namespace.yaml"
+kubectl delete -f "./namespace.yaml"
 images=$($type ssh "docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' '")
 for i in $images; do
   $type ssh "docker rmi $i --force"
