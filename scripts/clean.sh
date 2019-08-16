@@ -1,9 +1,9 @@
-#!/bin/bash 
+#!/bin/bash
 #
 crd="spinnakeroperator"
-ns="operators"
-
+ns=$(cat ../deploy/namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
 type=$1
+
 if [ "$type" != "k8s" -a "$type" != "oc" ]; then
   echo "$0: (k8s|oc)"
   exit 1
@@ -19,11 +19,11 @@ if [ "$?" == "0" ]; then
 fi
 deployments=$(kubectl get deployments -n $ns | grep -v NAME | awk '{ print $1 }')
 if [ "$deployments" != "" ]; then
-    kubectl -n operators delete deployments $deployments
+    kubectl -n $ns delete deployments $deployments
 fi
 svcs=$(kubectl get svc -n $ns | grep -v NAME | awk '{ print $1 }')
 for svc in $svcs; do 
-    kubectl -n operators delete svc $svc
+    kubectl -n $ns delete svc $svc
 done
 
 kubectl -n $ns delete -f  "../deploy/service_account.yaml"
@@ -31,14 +31,15 @@ kubectl -n $ns delete -f  "../deploy/role.yaml"
 kubectl -n $ns delete -f  "../deploy/role_binding.yaml"
 TRUE=true
 while $TRUE; do
-  kubectl -n $ns get all | grep halyard
-  if [ "$?" != "0" ];then
-    echo "Halyard is gone"
+  count=$(kubectl -n $ns get pods | grep pod | wc -l)
+  if [ "$count" == "0" ];then
+    echo "Pods are gone"
     TRUE=false
   fi
-  echo "Waiting for halyard to go"
+  echo "Waiting for pods to go"
   sleep 1
 done
+kubectl delete -f "../deploy/namespace.yaml"
 images=$($type ssh "docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' '")
 for i in $images; do
   $type ssh "docker rmi $i --force"

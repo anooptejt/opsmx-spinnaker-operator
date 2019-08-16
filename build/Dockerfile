@@ -1,6 +1,6 @@
 FROM quay.io/operator-framework/helm-operator:v0.10.0
 
-LABEL name='open-enterprise-spinnaker-operator'
+LABEL name='open-enterprise-spinnaker'
 LABEL vendor='OpsMx'
 LABEL release='3'
 LABEL version='1.15.1'

@@ -33,6 +33,6 @@ spec:
     create: false
   serviceAccount:
     create: false
-    halyardName: open-enterprise-spinnaker-operator
+    halyardName: open-enterprise-spinnaker
     spinnakerName: null
 

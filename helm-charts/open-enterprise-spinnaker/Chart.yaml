@@ -7,7 +7,7 @@ icon: https://pbs.twimg.com/profile_images/669205226994319362/O7OjwPrh_400x400.p
 maintainers:
 - email: support@opsmx.io
   name: Funs
-name: open-enterprise-spinnaker-operator
+name: open-enterprise-spinnaker
 sources:
 - https://github.com/spinnaker
 version: 1.15.1-3

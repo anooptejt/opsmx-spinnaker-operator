@@ -58,13 +58,13 @@ metadata:
       },
       "serviceAccount": {
         "create": false,
-        "halyardName": "open-enterprise-spinnaker-operator",
+        "halyardName": "open-enterprise-spinnaker",
         "spinnakerName": null
       }
     }
   }
 ]'
-  name: open-enterprise-spinnaker-operator.v1.15.1
+  name: open-enterprise-spinnaker.v1.15.1
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -77,17 +77,17 @@ spec:
   install:
     spec:
       deployments:
-      - name: open-enterprise-spinnaker-operator
+      - name: open-enterprise-spinnaker
         spec:
           replicas: 1
           selector:
             matchLabels:
-              name: open-enterprise-spinnaker-operator
+              name: open-enterprise-spinnaker
           strategy: {}
           template:
             metadata:
               labels:
-                name: open-enterprise-spinnaker-operator
+                name: open-enterprise-spinnaker
             spec:
               containers:
               - env:
@@ -100,12 +100,12 @@ spec:
                     fieldRef:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
-                  value: open-enterprise-spinnaker-operator
+                  value: open-enterprise-spinnaker
                 image: docker.io/zappo/spinnaker-operator:1.15.1-3
                 imagePullPolicy: Always
-                name: open-enterprise-spinnaker-operator
+                name: open-enterprise-spinnaker
                 resources: {}
-              serviceAccountName: open-enterprise-spinnaker-operator
+              serviceAccountName: open-enterprise-spinnaker
       clusterPermissions:
       - rules:
         - apiGroups:
@@ -114,7 +114,7 @@ spec:
           - "*"
           verbs:
           - "*"
-        serviceAccountName: open-enterprise-spinnaker-operator
+        serviceAccountName: open-enterprise-spinnaker
     strategy: deployment
   installModes:
   - supported: true
