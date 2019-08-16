@@ -16,6 +16,7 @@ fi
 ncrd=$(kubectl get crds | grep $crd | awk '{ print $1 }')
 if [ "$?" == "0" ]; then
     # patch so delete gets easy...
+    kubectl delete crds/$ncrd &
     kubectl patch crds/$ncrd -p '{"metadata":{"finalizers":[]}}' --type=merge
     kubectl delete crds/$ncrd
 
