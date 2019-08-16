@@ -1,4 +1,5 @@
 cr-manifest:
- - deploy/crds/open-enterprise-spinnaker_cr.yaml
+  - deploy/crds/open-enterprise-spinnaker_cr.yaml
+#  - deploy/crds/deploy-oes.yaml
 init-timeout: 60
 csv-path: "deploy/olm-catalog/open-enterprise-spinnaker/1.15.1/open-enterprise-spinnaker.v1.15.1.clusterserviceversion.yaml"

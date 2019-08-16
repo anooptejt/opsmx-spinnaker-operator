@@ -45,5 +45,5 @@ done
 kubectl delete -f "./namespace.yaml"
 images=$($type ssh "docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' '")
 for i in $images; do
-  $type ssh "docker rmi $i --force"
+  echo $type ssh "docker rmi $i --force"
 done
