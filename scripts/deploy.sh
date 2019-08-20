@@ -52,9 +52,12 @@ NodePort=$(kubectl get svc/spin-deck -n $ns -o yaml | grep nodePor | awk '{ prin
 # check this url, gives 500 till done
 TRUE=true
 while $TRUE; do
-  curl http://$IP:$NodePort/gate/projects | grep 500
-  if [ "$?" == "1" ]; then
-    TRUE=false
+  res=$(curl http://$IP:$NodePort/gate/projects)
+  if [ "$?" == "0" ]; then
+    echo $res | grep 500
+    if [ "$?" == "1" ]; then
+      TRUE=false
+    fi
   fi
 done
 echo "Deck is running on http://$IP:$NodePort/"
