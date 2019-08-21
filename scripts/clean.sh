@@ -4,13 +4,19 @@ crd="spinnakeroperator"
 ns=$(cat ./namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
 type=$1
 
-if [ "$type" != "k8s" -a "$type" != "oc" ]; then
-  echo "$0: (k8s|oc)"
+if [ "$type" != "minikube" -a "$type" != "minishift" -a "$type" != "minispin" ]; then
+  echo "$0: (minikube|minishit|minispin)"
   exit 1
-elif [ "$type" == "k8s" ]; then
-  type="minikube"
-else
-  type="minishift"
+elif [ "$type" == "minikube" ]; then
+  type="kubectl"
+  mini="minikube"
+elif [ "$type" == "minishift" ]; then
+  type="oc"
+  mini="minishift"
+# in minispin, minikube runs under root, required for bare-metal deployment.
+elif [ "$type" == "minispin" ]; then
+  type="kubectl"
+  mini="sudo minikube"
 fi
 
 ncrd=$(kubectl get crds | grep $crd | awk '{ print $1 }')

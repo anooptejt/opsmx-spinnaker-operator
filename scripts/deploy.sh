@@ -3,15 +3,19 @@
 # 
 #
 type=$1
-if [ "$type" != "k8s" -a "$type" != "oc" ]; then
-  echo "$0: (k8s|oc)"
+if [ "$type" != "minikube" -a "$type" != "minishift" -a "$type" != "minispin" ]; then
+  echo "$0: (minikube|minishit|minispin)"
   exit 1
-elif [ "$type" == "k8s" ]; then
+elif [ "$type" == "minikube" ]; then
   type="kubectl"
   mini="minikube"
-else
+elif [ "$type" == "minishift" ]; then
   type="oc"
   mini="minishift"
+# in minispin, minikube runs under root, required for bare-metal deployment.
+elif [ "$type" == "minispin" ]; then
+  type="kubectl"
+  mini="sudo minikube"
 fi
 ns=${2:-spin}
 
