@@ -56,7 +56,12 @@ NodePort=$(kubectl get svc/spin-deck -n $ns -o yaml | grep nodePor | awk '{ prin
 # check this url, gives 500 till done
 TRUE=true
 while $TRUE; do
-  res=$(curl http://$IP:$NodePort/gate/projects)
+  curlopts="--connect-timeout 2 \
+     --max-time 10 \
+     --retry 5 \
+     --retry-delay 0 \
+     --retry-max-time 2"
+  res=$(curl $curlopts http://$IP:$NodePort/gate/projects)
   if [ "$?" == "0" ]; then
     echo $res | grep 500
     if [ "$?" == "1" ]; then
