@@ -41,9 +41,18 @@ while $TRUE; do
   halpod=$(kubectl -n $ns get pods | grep halyard | awk '{ print $1 }')
   if [ "$halpod" != "" ]; then
     logcount=$( kubectl logs -n $ns $halpod | wc -l)
+    # count is about 8050...
     echo -n "halyard progress: $(($logcount / 81)) - "
+    kubectl -n $ns get pods | grep spin-deck
+    if [ "$?" == "0" ]; then
+      echo "found spin-deck"
+      TRUE=false
+    else
+      echo "waiting for spin-deck"
+    fi
+  else
+    echo "waiting for halyard"
   fi
-  echo "waiting for spin-deck"
   sleep 1
 done
 kubectl -n $ns patch svc spin-deck -p '{"spec":{"type": "NodePort" }}'
