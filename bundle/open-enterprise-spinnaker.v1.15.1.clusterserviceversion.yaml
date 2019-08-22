@@ -5,7 +5,7 @@ metadata:
     capabilities: Basic Install
     categories: "Integration & Delivery"
     certified: "true"
-    containerImage: docker.io/zappo/spinnaker-operator:1.15.1-3
+    containerImage: registry.connect.redhat.com/opsmx/spinnaker-operator:1.15.1-3
     description: Spinnaker is an Open Source, multi-cloud Continuous delivery platform to perform software releases with high velocity and confidence.
     support: OpsMx
     createdAt: 2019-04-08T19:49:35Z
@@ -21,7 +21,7 @@ metadata:
       "halyard": {
         "spinnakerVersion": "1.15.1",
         "image": {
-          "repository": "zappo/ubi8-oes-operator-halyard",
+          "repository": "registry.connect.redhat.com/opsmx/ubi8-oes-operator-halyard",
           "tag": "1.15.1-1"
         }
       },
@@ -41,7 +41,7 @@ metadata:
         "artifacts",
         "jobs"
       ],
-      "zappo/ubi8-oes-minio": {
+      "registry.connect.redhat.com/opsmx/ubi8-oes-minio": {
         "enabled": true,
         "imageTag": "version-09082019",
         "serviceType": "ClusterIP",
@@ -101,7 +101,7 @@ spec:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: open-enterprise-spinnaker
-                image: docker.io/zappo/spinnaker-operator:1.15.1-3
+                image: registry.connect.redhat.com/opsmx/spinnaker-operator:1.15.1-3
                 imagePullPolicy: Always
                 name: open-enterprise-spinnaker
                 resources: {}

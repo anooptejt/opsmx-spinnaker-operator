@@ -16,7 +16,7 @@ spec:
       containers:
         - name: open-enterprise-spinnaker
           # Replace this with the built image name
-          image: zappo/spinnaker-operator:1.15.1-3
+          image: registry.connect.redhat.com/opsmx/spinnaker-operator:1.15.1-3
           imagePullPolicy: Always
           env:
             - name: WATCH_NAMESPACE
