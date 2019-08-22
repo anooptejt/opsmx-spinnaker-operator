@@ -42,7 +42,7 @@ while $TRUE; do
   if [ "$halpod" != "" ]; then
     logcount=$( kubectl logs -n $ns $halpod | wc -l)
     # count is about 5900... for spin-deck to show
-    echo -n "halyard progress: $(($logcount / 55))% - "
+    echo -n "halyard progress: $(($logcount / 59))% - "
     res=$(kubectl -n $ns get pods | grep spin-deck)
     if [ "$?" == "0" ]; then
       echo "found $res"
