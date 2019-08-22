@@ -65,16 +65,16 @@ for i in ui api; do
   kubectl -n $ns exec -ti $HALPOD -- bash -c "$cmd"
 done
 kubectl -n $ns exec -ti $HALPOD -- bash -c "hal deploy apply"
-NodePort=$(kubectl get svc/spin-deck -n $ns -o yaml | grep nodePor | awk '{ print $3 }')
+NodePort=$(kubectl get svc/spin-deck -n $ns -o yaml | grep nodePort | awk '{ print $3 }')
 
 # check this url, gives 500 till done
 TRUE=true
 while $TRUE; do
   curlopts="--connect-timeout 2 \
-     --max-time 10 \
-     --retry 5 \
-     --retry-delay 0 \
-     --retry-max-time 2"
+     --max-time 30 \
+     --retry 10 \
+     --retry-delay 2 \
+     --retry-max-time 5"
   res=$(curl $curlopts http://$IP:$NodePort/gate/projects)
   if [ "$?" == "0" ]; then
     echo $res | grep 500
