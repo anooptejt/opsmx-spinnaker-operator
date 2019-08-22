@@ -41,11 +41,11 @@ while $TRUE; do
   halpod=$(kubectl -n $ns get pods | grep halyard | awk '{ print $1 }')
   if [ "$halpod" != "" ]; then
     logcount=$( kubectl logs -n $ns $halpod | wc -l)
-    # count is about 8050...
-    echo -n "halyard progress: $(($logcount / 81))% - "
-    kubectl -n $ns get pods | grep spin-deck
+    # count is about 5900... for spin-deck to show
+    echo -n "halyard progress: $(($logcount / 60))% - "
+    res=$(kubectl -n $ns get pods | grep spin-deck)
     if [ "$?" == "0" ]; then
-      echo "found spin-deck"
+      echo "found $res"
       TRUE=false
     else
       echo "waiting for spin-deck"
