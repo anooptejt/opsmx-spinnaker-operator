@@ -41,7 +41,7 @@ metadata:
         "artifacts",
         "jobs"
       ],
-      "zappo/ubi8-oes-minio": {
+      "minio": {
         "enabled": true,
         "imageTag": "version-09082019",
         "serviceType": "ClusterIP",
