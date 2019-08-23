@@ -100,9 +100,6 @@ spec:
       - name: open-enterprise-spinnaker
         spec:
           replicas: 1
-          selector:
-            matchLabels:
-              name: open-enterprise-spinnaker
           strategy: {}
           template:
             metadata:
