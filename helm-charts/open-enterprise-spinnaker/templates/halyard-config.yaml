@@ -14,13 +14,8 @@ data:
     rm /tmp/passwd
     fi
     # Wait for the Hal daemon to be ready
-    env | grep HALYARD_SERVICE_PORT
-    if [ "$?" != "0" ]; then
-       export DAEMON_ENDPOINT="http://{{ template "spinnaker.fullname" . }}-halyard:8064"
-       export HAL_COMMAND="hal --daemon-endpoint $DAEMON_ENDPOINT"
-    else
-       export HAL_COMMAND="hal"
-    fi
+    export DAEMON_ENDPOINT=http://{{ template "spinnaker.fullname" . }}-halyard:8064
+    export HAL_COMMAND="hal --daemon-endpoint $DAEMON_ENDPOINT"
     until $HAL_COMMAND --ready; do sleep 10 ; done
     bash -xe /opt/halyard/scripts/config.sh
     {{- if .Values.halyard.additionalScripts.enabled }}
