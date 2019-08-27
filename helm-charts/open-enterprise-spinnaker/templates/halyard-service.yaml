@@ -8,8 +8,8 @@ metadata:
 spec:
   ports:
   - port: 8064
-    name: daemon
-  clusterIP: None
+    targetPort: 8064
+    protocol: TCP
   selector:
     app: {{ template "spinnaker.fullname" . }}
     component: halyard
