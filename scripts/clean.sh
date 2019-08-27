@@ -49,8 +49,15 @@ while $TRUE; do
   echo "Waiting for pods to go"
   sleep 1
 done
-kubectl delete -f "./namespace.yaml"
-images=$($type ssh "docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' '")
-for i in $images; do
-  echo $type ssh "docker rmi $i --force"
-done
+if [ "$mini" != "minispin" ]; then
+  images=$($type ssh "docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' '")
+  for i in $images; do
+    echo $type ssh "docker rmi $i --force"
+  done
+else
+  images=$(sudo docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' ')
+  for i in $images; do
+    echo sudo docker rmi $i --force
+  done
+fi
+
