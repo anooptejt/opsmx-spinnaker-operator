@@ -49,7 +49,7 @@ while $TRUE; do
   echo "Waiting for pods to go"
   sleep 1
 done
-if [ "$mini" != "minispin" ]; then
+if [ "$type" != "minispin" ]; then
   images=$($type ssh "docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' '")
   for i in $images; do
     echo $type ssh "docker rmi $i --force"
