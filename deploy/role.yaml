@@ -12,7 +12,7 @@ rules:
   - '*'
 - apiGroups:
   - ""
-   "extensions"
+  - "extensions"
   resources:
   - pods
   - services
