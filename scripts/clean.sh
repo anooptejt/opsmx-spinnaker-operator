@@ -55,7 +55,7 @@ if [ "$type" != "minispin" ]; then
     echo $type ssh "docker rmi $i --force"
   done
 else
-  images=$(sudo docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' ')
+  images=$(sudo docker images| grep spinnaker-operator | awk '{ print $3 }' | tr '\n' ' ')
   for i in $images; do
     echo sudo docker rmi $i --force
   done
