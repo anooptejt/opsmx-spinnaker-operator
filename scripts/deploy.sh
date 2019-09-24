@@ -57,7 +57,7 @@ while $TRUE; do
 done
 IP=$($mini ip)
 HALPOD=$(kubectl -n $ns get pods | grep halyard | awk '{ print $1 }')
-ingress=$(egrep "ingress:|ingressGate:" crds/deploy-oes.yaml | wc -l)
+ingress=$(egrep "ingress:|ingressGate:" ../deploy/crds/deploy-oes.yaml | wc -l)
 if [ "$ingress" != "2" ]; then
     echo "No ingress configured, configuring direct connection"
     kubectl -n $ns patch svc spin-deck -p '{"spec":{"type": "NodePort" }}'
