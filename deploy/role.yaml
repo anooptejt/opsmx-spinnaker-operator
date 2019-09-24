@@ -12,6 +12,7 @@ rules:
   - '*'
 - apiGroups:
   - ""
+   "extensions"
   resources:
   - pods
   - services
@@ -20,6 +21,7 @@ rules:
   - events
   - configmaps
   - secrets
+  - ingresses
   verbs:
   - '*'
 - apiGroups:
@@ -36,6 +38,7 @@ rules:
   - daemonsets
   - replicasets
   - statefulsets
+  - ingresses
   verbs:
   - '*'
 - apiGroups:
