@@ -38,7 +38,6 @@ rules:
   - daemonsets
   - replicasets
   - statefulsets
-  - ingresses
   verbs:
   - '*'
 - apiGroups:
