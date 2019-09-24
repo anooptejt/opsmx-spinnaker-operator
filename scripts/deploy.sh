@@ -55,17 +55,24 @@ while $TRUE; do
   fi
   sleep 1
 done
-kubectl -n $ns patch svc spin-deck -p '{"spec":{"type": "NodePort" }}'
 IP=$($mini ip)
 HALPOD=$(kubectl -n $ns get pods | grep halyard | awk '{ print $1 }')
-HALPORT=$(kubectl -n $ns get svc/spin-deck | perl -ne 'if (/\d+:(\d+)/) { print $1 }')
-for i in ui api; do
-  cmd="hal config security $i edit \
-    --override-base-url http://$IP:$HALPORT/gate"
-  kubectl -n $ns exec -ti $HALPOD -- bash -c "$cmd"
-done
-kubectl -n $ns exec -ti $HALPOD -- bash -c "hal deploy apply"
-NodePort=$(kubectl get svc/spin-deck -n $ns -o yaml | grep nodePort | awk '{ print $3 }')
+ingress=$(egrep "ingress:|ingressGate:" crds/deploy-oes.yaml | wc -l)
+if [ "$ingress" != "2" ]; then
+    echo "No ingress configured, configuring direct connection"
+    kubectl -n $ns patch svc spin-deck -p '{"spec":{"type": "NodePort" }}'
+    HALPORT=$(kubectl -n $ns get svc/spin-deck | perl -ne 'if (/\d+:(\d+)/) { print $1 }')
+    for i in ui api; do
+        cmd="hal config security $i edit \
+            --override-base-url http://$IP:$HALPORT/gate"
+        kubectl -n $ns exec -ti $HALPOD -- bash -c "$cmd"
+    done
+    kubectl -n $ns exec -ti $HALPOD -- bash -c "hal deploy apply"
+    NodePort=$(kubectl get svc/spin-deck -n $ns -o yaml | grep nodePort | awk '{ print $3 }')
+else
+    echo "Ingress configured"
+    NodePort="80"
+fi
 
 # check this url, gives 500 till done
 TRUE=true
