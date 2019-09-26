@@ -110,7 +110,7 @@ data:
     {{- if .Values.ingress.host }}
     $HAL_COMMAND config security ui edit --no-validate --override-base-url {{ .Values.ingress.host }}
     {{- if .Values.ingressGate.host }}
-    $HAL_COMMAND config security api edit --no-validate --override-base-url {{ .Values.ingress.host }}
+    $HAL_COMMAND config security api edit --no-validate --override-base-url {{ .Values.ingressGate.host }}
     {{- end }}
     {{- else }}
     $HAL_COMMAND config security api edit --no-validate --override-base-url http://spin-gate.{{ .Release.Namespace }}:8084
