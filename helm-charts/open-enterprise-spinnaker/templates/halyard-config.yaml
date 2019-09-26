@@ -107,7 +107,14 @@ data:
     $HAL_COMMAND config deploy edit --account-name {{ .Values.kubeConfig.deploymentContext }} --type distributed \
                            --location {{ .Release.Namespace }}
     # Use Deck to route to Gate
+    {{- if .Values.ingress.host }}
+    $HAL_COMMAND config security ui edit --no-validate --override-base-url {{ .Values.ingress.host }}
+    {{- if .Values.ingressGate.host }}
+    $HAL_COMMAND config security api edit --no-validate --override-base-url {{ .Values.ingress.host }}
+    {{- end }}
+    {{- else }}
     $HAL_COMMAND config security api edit --no-validate --override-base-url http://spin-gate.{{ .Release.Namespace }}:8084
+    {{- end }}
     {{- range $index, $feature := .Values.spinnakerFeatureFlags }}
     $HAL_COMMAND config features edit --{{ $feature }} true
     {{- end }}

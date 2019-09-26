@@ -72,19 +72,20 @@ if [ "$ingress" != "2" ]; then
 else
     echo "Ingress configured"
     NodePort="80"
+    curlopts="-H $ingressHostName "
 fi
 
 # check this url, gives 500 till done
 TRUE=true
 while $TRUE; do
-  curlopts="--connect-timeout 2 \
+  curlopts+="--connect-timeout 2 \
      --max-time 30 \
      --retry 10 \
      --retry-delay 2 \
      --retry-max-time 5"
   res=$(curl $curlopts http://$IP:$NodePort/gate/projects)
   if [ "$?" == "0" ]; then
-    echo $res | grep 500
+    echo $res | egrep "500|404"
     if [ "$?" == "1" ]; then
       TRUE=false
     fi
