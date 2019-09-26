@@ -1,6 +1,6 @@
-#!/bin/bash 
+#!/bin/bash
 #
-# 
+#
 #
 type=$1
 if [ "$type" != "minikube" -a "$type" != "minishift" -a "$type" != "minispin" ]; then
@@ -72,6 +72,7 @@ if [ "$ingress" != "2" ]; then
 else
     echo "Ingress configured"
     NodePort="80"
+    ingressHostName=$(grep host: ../deploy/crds/deploy-oes.yaml  | head -1 | awk '{ print $2 }') 
     curlopts="-H $ingressHostName "
 fi
 
