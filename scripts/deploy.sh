@@ -110,12 +110,12 @@ fi
 
 # check this url, gives 500 till done
 TRUE=true
+curlopts+="--connect-timeout 2 \
+   --max-time 30 \
+   --retry 10 \
+   --retry-delay 2 \
+   --retry-max-time 5"
 while $TRUE; do
-  curlopts+="--connect-timeout 2 \
-     --max-time 30 \
-     --retry 10 \
-     --retry-delay 2 \
-     --retry-max-time 5"
   res=$(curl $curlopts http://$IP:$NodePort/gate/projects)
   if [ "$?" == "0" ]; then
     echo $res | egrep "500|404"
