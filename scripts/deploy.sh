@@ -37,7 +37,7 @@ ns=${ns:-spin}
 version=${version:-1.16.0}
 
 if [ "$type" != "minikube" -a "$type" != "minishift" -a "$type" != "minispin" ]; then
-  echo "$0: (minikube|minishit|minispin)"
+  usage
   exit 1
 elif [ "$type" == "minikube" ]; then
   type="kubectl"

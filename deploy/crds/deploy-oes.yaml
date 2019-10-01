@@ -4,7 +4,7 @@ metadata:
   name: oes
 spec:
   halyard:
-    spinnakerVersion: 1.16.0
+    spinnakerVersion: 1.15.1
     image:
       repository: zappo/ubi8-oes-operator-halyard
       tag: 1.16.0-1
@@ -21,12 +21,6 @@ spec:
     - jobs
   minio:
     enabled: true
-    imageTag: version-09082019
-    serviceType: ClusterIP
-    accessKey: spinnakeradmin
-    secretKey: spinnakeradmin
-    bucket: spinnaker
-    nodeSelector: {}
     persistence:
       enabled: false
   rbac:

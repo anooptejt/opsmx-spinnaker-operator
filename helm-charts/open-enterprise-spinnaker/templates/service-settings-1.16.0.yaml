@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "spinnaker.fullname" . }}-service-settings
+  name: {{ template "spinnaker.fullname" . }}-service-settings-1.16.0
   labels:
 {{ include "spinnaker.standard-labels" . | indent 4 }}
 data:
