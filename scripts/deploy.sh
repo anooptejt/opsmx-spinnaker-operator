@@ -2,7 +2,40 @@
 #
 #
 #
-type=$1
+usage() {
+  echo "$0: -t type -n namespace -V version -help"
+}
+
+while [ "$1" != "" ]; do
+  case $1 in
+    -t|--type)
+       shift
+       type=$1
+       ;;
+    -v|--verbose)
+       verbose=1
+       ;;
+    -n|--namespace)
+       shift
+       ns=$1
+       ;;
+    -V|--version)
+       shift
+       version=$1
+       ;;
+    -h|--help)
+       usage
+       exit
+       ;;
+    *)
+       usage
+       exit 1
+    esac
+    shift
+done
+ns=${ns:-spin}
+version=${version:-1.16.0}
+
 if [ "$type" != "minikube" -a "$type" != "minishift" -a "$type" != "minispin" ]; then
   echo "$0: (minikube|minishit|minispin)"
   exit 1
@@ -17,7 +50,6 @@ elif [ "$type" == "minispin" ]; then
   type="kubectl"
   mini="sudo minikube"
 fi
-ns=${2:-spin}
 
 cat <<EOF > ../deploy/namespace.yaml
 { "apiVersion": "v1", "kind": "Namespace", "metadata": { "name": "$ns", "labels": { "name": "$ns"} } }
@@ -72,7 +104,7 @@ if [ "$ingress" != "2" ]; then
 else
     echo "Ingress configured"
     NodePort="80"
-    ingressHostName=$(grep host: ../deploy/crds/deploy-oes.yaml  | head -1 | awk '{ print $2 }') 
+    ingressHostName=$(grep host: ../deploy/crds/deploy-oes.yaml  | head -1 | awk '{ print $2 }')
     curlopts="-H $ingressHostName "
 fi
 
@@ -91,5 +123,6 @@ while $TRUE; do
       TRUE=false
     fi
   fi
+  sleep 1
 done
 echo "Deck is running on http://$IP:$NodePort/"

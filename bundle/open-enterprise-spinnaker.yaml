@@ -1,5 +1,5 @@
 packageName: open-enterprise-spinnaker
 channels:
   - name: alpha
-    currentCSV: open-enterprise-spinnaker.v1.15.1
+    currentCSV: open-enterprise-spinnaker.v1.16.0
 defaultChannel: alpha
