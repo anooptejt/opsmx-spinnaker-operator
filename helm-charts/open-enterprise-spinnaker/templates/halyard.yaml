@@ -39,7 +39,7 @@ spec:
         volumeMounts:
         - name: halyard-config
           mountPath: /tmp/config
-        - name: service-settings-{{ .Values.halyard.spinnakerVersion }}
+        - name: service-settings
           mountPath: /tmp/service-settings
 #        - name: halyard-home
 #          mountPath: /tmp/spinnaker
@@ -100,7 +100,7 @@ spec:
       - name: halyard-config-scripts
         configMap:
           name: {{ template "spinnaker.fullname" . }}-halyard-config
-      - name: service-settings-{{ .Values.halyard.spinnakerVersion }}
+      - name: service-settings
         configMap:
           name: {{ template "spinnaker.fullname" . }}-service-settings-{{ .Values.halyard.spinnakerVersion }}
       - name: halyard-initscript
@@ -144,7 +144,7 @@ spec:
           mountPath: /opt/halyard/config
         - name: halyard-config-scripts
           mountPath: /opt/halyard/scripts
-        - name: service-settings-{{ .Values.halyard.spinnakerVersion }}
+        - name: service-settings
           mountPath: /home/builder/service-settings/
         - name: reg-secrets
           mountPath: /opt/registry/passwords
