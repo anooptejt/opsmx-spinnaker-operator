@@ -16,6 +16,7 @@ metadata:
     "kind": "OpenEnterpriseSpinnakerOperator",
     "metadata": {
       "name": "oes"
+      "namespace": "spinnaker"
     },
     "spec": {
       "halyard": {

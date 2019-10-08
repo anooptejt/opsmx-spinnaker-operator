@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorSource
+metadata:
+  name: validated-operators
+  namespace: openshift-marketplace
+spec:
+  type: appregistry
+  displayName: Validated Operators
+  registryNamespace: zappo
+  endpoint: https://quay.io/cnr
