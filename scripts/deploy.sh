@@ -34,7 +34,7 @@ version=${version:-1.15.1}
 
 usage() {
   echo "Usage: $0 [OPTION...]
-  -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, kubectl, oc
+  -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, k8s, openshift (no default)
   -V|--version=VERSION      Suported Spinnaker version to deploy, 1.15.1, $version ($version)
   -n|--namespace=STRING     Namespace to deploy OES in ($ns)
   -v|--verbose              Does nothing
@@ -138,9 +138,11 @@ curlopts+="--connect-timeout 2 \
     --retry 10 \
     --retry-delay 2 \
     --retry-max-time 5"
+SECONDS=0
 while $TRUE; do
-    echo -ne "Waiting for gate to respond\r"
-    res=$(curl -s $curlopts http://$LISTENER/gate/projects > /dev/null)
+    delta=$SECONDS
+    echo -ne "Waiting for gate to respond: ${delta}s\r"
+    res=$(curl -s $curlopts http://$LISTENER/gate/projects)
     if [ "$?" == "0" ]; then
         echo $res | egrep "500|404"
         if [ "$?" == "1" ]; then
@@ -149,4 +151,4 @@ while $TRUE; do
     fi
     sleep 1
 done
-echo "Deck is running on http://$LISTENER/
+echo "Deck is running on http://$LISTENER/"

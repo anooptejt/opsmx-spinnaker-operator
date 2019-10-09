@@ -4,10 +4,10 @@ metadata:
   name: oes
 spec:
   halyard:
-    spinnakerVersion: 1.15.1
+    spinnakerVersion: 1.16.0
     image:
       repository: zappo/ubi8-oes-operator-halyard
-      tag: 1.15.1-1
+      tag: 1.16.0-1
   dockerRegistries:
     - name: dockerhub
       address: index.docker.io
