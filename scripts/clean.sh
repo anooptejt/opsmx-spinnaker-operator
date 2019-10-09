@@ -1,29 +1,70 @@
 #!/bin/bash
 #
-crd="spinnakeroperator"
-ns=$(cat ./namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
-type=$1
+#
+#
+while [ "$1" != "" ]; do
+    case $1 in
+    -t|--type)
+        shift
+        type=$1
+        ;;
+    -f|--force-crd-delete)
+        force=1
+        ;;
+    -d|--rmi)
+        rmi=1
+        ;;
+    -v|--verbose)
+        verbose=1
+        ;;
+    -h|--help)
+        $0
+        exit
+        ;;
+    *)
+        $0
+        exit 1
+    esac
+    shift
+done
+crd="openenterprisespinnakeroperators"
 
-if [ "$type" != "minikube" -a "$type" != "minishift" -a "$type" != "minispin" ]; then
-  echo "$0: (minikube|minishit|minispin)"
-  exit 1
+usage() {
+    echo "Usage: $0 [OPTION...]
+  -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, none
+  -f|--force-crd-delete     Use with caution, may make you unhappy, however sometimes CRDs don't go..
+  -d|--rmi                  Remove the docker images
+  -v|--verbose              Does nothing
+  -h|--help                 This usage
+"
+}
+
+if [ "$type" != "minikube" -a "$type" != "minishift" -a "$type" != "minispin" -a "$type" != "k8s" -a "$type" != "openshift" -a "$type" != "crc" ]; then
+    usage
+    exit 1
 elif [ "$type" == "minikube" ]; then
-  kcmd="kubectl"
-  mini="minikube"
-elif [ "$type" == "minishift" ]; then
-  kcmd="oc"
-  mini="minishift"
+    kcmd="kubectl"
+    mini="minikube"
+elif [ "$type" == "minishift" -o "$type" == "crc" ]; then
+    kcmd="oc"
+    mini=$type
 # in minispin, minikube runs under root, required for bare-metal deployment.
 elif [ "$type" == "minispin" ]; then
-  kcmd="kubectl"
-  mini="sudo minikube"
+    kcmd="kubectl"
+    mini="sudo minikube"
+elif [ "$type" == "kubectl" -o "$type" == "oc" ]; then
+    kcmd=$type
+    mini=""
 fi
 
-ncrd=$(kubectl get crds | grep $crd | awk '{ print $1 }')
+ns=$(cat ./namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
+ncrd=$($kcmd get crds | grep $crd | awk '{ print $1 }')
 if [ "$?" == "0" ]; then
     # patch so delete gets easy...
-    # kubectl delete crds/$ncrd &
-    # kubectl patch crds/$ncrd -p '{"metadata":{"finalizers":[]}}' --type=merge
+    if [ "force" == "1" ]; then
+        $kcmd delete crds/$ncrd &
+        $kcmd patch crds/$ncrd -p '{"metadata":{"finalizers":[]}}' --type=merge
+    fi
     $kcmd delete crds/$ncrd
 
 fi
@@ -32,7 +73,7 @@ if [ "$deployments" != "" ]; then
     $kcmd -n $ns delete deployments $deployments
 fi
 svcs=$(kubectl get svc -n $ns | grep -v NAME | awk '{ print $1 }')
-for svc in $svcs; do 
+for svc in $svcs; do
     $kcmd -n $ns delete svc $svc
 done
 
@@ -41,23 +82,32 @@ $kcmd -n $ns delete -f  "../deploy/role.yaml"
 $kcmd -n $ns delete -f  "../deploy/role_binding.yaml"
 TRUE=true
 while $TRUE; do
-  count=$($kcmd -n $ns get pods | grep pod | wc -l)
-  if [ "$count" == "0" ];then
-    echo "Pods are gone"
-    TRUE=false
-  fi
-  echo "Waiting for pods to go"
-  sleep 1
+    count=$($kcmd -n $ns get pods | grep -i NAME | wc -l)
+    echo -ne "Waiting for pods to go, $count left\r"
+    if [ "$count" == "0" ];then
+        echo -ne "\r\nPods are gone, $count left\r\n"
+        TRUE=false
+    else
+        sleep 1
+    fi
 done
-if [ "$type" != "minispin" ]; then
-  images=$($type ssh "docker images| grep spinnaker-operator | awk '{ print \$3 }' | tr '\n' ' '")
-  for i in $images; do
-    echo $type ssh "docker rmi $i --force"
-  done
-else
-  images=$(sudo docker images| grep spinnaker-operator | awk '{ print $3 }' | tr '\n' ' ')
-  for i in $images; do
-    echo sudo docker rmi $i --force
-  done
-fi
 
+# should check if the operator container can delete the containers for us.... >:)
+if [ "$rmi" == "1" ]; then
+    echo "Deleting images"
+    if [ "$type" == "crc" -o "$type" == "none" ]; then
+        echo "Sorry I can't do that Dave: crc does not support access"
+    elif [ "$type" != "minispin" -a "$type" != "none" ]; then
+        images=$($type ssh "docker images| egrep 'spinnaker-operator|oes' | awk '{ print \$3 }' | tr '\n' ' '")
+        for i in $images; do
+            echo $type ssh "docker rmi $i --force"
+        done
+    else
+        images=$(sudo docker images| egrep 'spinnaker-operator|oes' | awk '{ print $3 }' | tr '\n' ' ')
+        for i in $images; do
+            echo sudo docker rmi $i --force
+        done
+    fi
+fi
+$kcmd -n $ns delete -f ./namespace.yaml
+rm ./namespace.yaml

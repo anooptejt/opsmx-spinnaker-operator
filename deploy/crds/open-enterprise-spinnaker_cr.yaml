@@ -4,7 +4,7 @@ metadata:
   name: oes
 spec:
   # Default values copied from <project_dir>/helm-charts/opsmx-spinnaker-operator/values.yaml
-  
+
   halyard:
     spinnakerVersion: 1.15.1
     image:
@@ -42,20 +42,20 @@ spec:
               remoteIpHeader: X-Forwarded-For
               internalProxies: .*
               httpsServerPort: X-Forwarded-Port
-  
+
     ## Uncomment if you want to add extra commands to the init script
     ## run by the init container before halyard is started.
     # additionalInitScript: |-
-  
+
     ## Uncomment if you want to add annotations on halyard and install-using-hal pods
     # annotations:
     #   iam.amazonaws.com/role: <role_arn>
-  
+
   # Define which registries and repositories you want available in your
   # Spinnaker pipeline definitions
   # For more info visit:
   #   https://www.spinnaker.io/setup/providers/docker-registry/
-  
+
   # Configure your Docker registries here
   dockerRegistries:
   - name: dockerhub
@@ -70,15 +70,15 @@ spec:
   #   username: _json_key
   #   password: '<INSERT YOUR SERVICE ACCOUNT JSON HERE>'
   #   email: 1234@5678.com
-  
+
   # If you don't want to put your passwords into a values file
   # you can use a pre-created secret instead of putting passwords
   # (specify secret name in below `dockerRegistryAccountSecret`)
   # per account above with data in the format:
   # <name>: <password>
-  
+
   # dockerRegistryAccountSecret: myregistry-secrets
-  
+
   kubeConfig:
     # Use this when you want to register arbitrary clusters with Spinnaker
     # Upload your ~/kube/.config to a secret
@@ -92,7 +92,7 @@ spec:
     omittedNameSpaces:
     - kube-system
     - kube-public
-  
+
   # Change this if youd like to expose Spinnaker outside the cluster
   ingress:
     enabled: false
@@ -105,7 +105,7 @@ spec:
     #  - secretName: -tls
     #    hosts:
     #      - domain.com
-  
+
   ingressGate:
     enabled: false
     # host: gate.spinnaker.example.org
@@ -117,7 +117,7 @@ spec:
     #  - secretName: -tls
     #    hosts:
     #      - domain.com
-  
+
   # spinnakerFeatureFlags is a list of Spinnaker feature flags to enable
   # Ref: https://www.spinnaker.io/reference/halyard/commands/#hal-config-features-edit
   # spinnakerFeatureFlags:
@@ -126,12 +126,12 @@ spec:
   spinnakerFeatureFlags:
     - artifacts
     - jobs
-  
+
   # Node labels for pod assignment
   # Ref: https://kubernetes.io/docs/user-guide/node-selection/
   # nodeSelector to provide to each of the Spinnaker components
   nodeSelector: {}
-  
+
   # Redis password to use for the in-cluster redis service
   # Enable redis to use in-cluster redis
   redis:
@@ -149,7 +149,7 @@ spec:
     master:
       persistence:
         enabled: false
-  
+
   # Minio access/secret keys for the in-cluster S3 usage
   # Minio is not exposed publically
   minio:
@@ -163,7 +163,7 @@ spec:
   # Uncomment if you don't want to create a PVC for minio
     persistence:
       enabled: false
-  
+
   # Google Cloud Storage
   gcs:
     enabled: false
@@ -175,7 +175,7 @@ spec:
     ## is empty, it will not create a secret assuming you are creating one
     ## external to the chart. the key for that secret should be `key.json`.
     secretName:
-  
+
   # AWS Simple Storage Service
   s3:
     enabled: false
@@ -185,18 +185,18 @@ spec:
     # endpoint: ""
     # accessKey: ""
     # secretKey: ""
-  
+
   # Azure Storage Account
   azs:
     enabled: false
   #   storageAccountName: ""
   #   accessKey: ""
   #   containerName: "spinnaker"
-  
+
   rbac:
     # Specifies whether RBAC resources should be created
     create: false
-  
+
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
     create: false
@@ -204,5 +204,3 @@ spec:
     # If left blank it is auto-generated from the fullname of the release
     halyardName: open-enterprise-spinnaker
     spinnakerName:
-  
-
