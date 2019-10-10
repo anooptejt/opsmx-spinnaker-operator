@@ -32,10 +32,10 @@ The Halyad container, and deployed spinnaker version, are controlled with the fo
 ```
 spec:
   halyard:
-    spinnakerVersion: 1.15.1
+    spinnakerVersion: 1.16.0
     image:
       repository: devopsmx/ubi8-oes-operator-halyard
-      tag: 1.15.1-1
+      tag: 1.16.0-1
 ```
 # deploy.sh steps
 1. Deploys the Custom Resource Definition
