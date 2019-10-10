@@ -48,14 +48,16 @@ spec:
 8. Get ingress point when Deck is running
 9. Check gate is running before exit
 
-> Usage: ./deploy.sh [OPTION...]
->   -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, k8s, openshift (no default)
->   -V|--version=VERSION      Suported Spinnaker version to deploy, 1.15.1, 1.16.0 (1.15.1)
->   -n|--namespace=STRING     Namespace to deploy OES in (spin)   
->   -v|--verbose              Does nothing
->   -h|--help                 This usage
->
-> e.g., ./deploy.sh -t kubectl
+```
+Usage: ./deploy.sh [OPTION...]
+  -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, k8s, openshift (no default)
+  -V|--version=VERSION      Suported Spinnaker version to deploy, 1.15.1, 1.16.0 (1.15.1)
+  -n|--namespace=STRING     Namespace to deploy OES in (spin)   
+  -v|--verbose              Does nothing
+  -h|--help                 This usage
+
+e.g., ./deploy.sh -t kubectl
+```
 
 # clean.sh steps
 1. Delete the Custom Resource Definition, when forced patch it to remove finalizers (cough)
@@ -65,11 +67,13 @@ spec:
 5. Wait till all the pods are gone
 6. Depending on type of deployment, and flag delete container images
 
-> Usage: ./clean.sh [OPTION...]
->   -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, none
->   -f|--force-crd-delete     Use with caution, may make you unhappy, however sometimes CRDs don't go..
->   -d|--rmi                  Remove the docker images
->   -v|--verbose              Does nothing
->   -h|--help                 This usage
->
-> e.g., ./clean.sh -t kubectl
+```
+Usage: ./clean.sh [OPTION...]
+  -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, none
+  -f|--force-crd-delete     Use with caution, may make you unhappy, however sometimes CRDs don't go..
+  -d|--rmi                  Remove the docker images
+  -v|--verbose              Does nothing
+  -h|--help                 This usage
+
+e.g., ./clean.sh -t kubectl
+```
