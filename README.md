@@ -6,5 +6,4 @@ TOC:
 - bundle: The Operator bundle as it is presented in the Openshift 4 Red Hat Certified MarketPlace
 - deploy: The Custom Resource Definition based deployment manifests without using the Operator
 - helm-charts: The HELM charts used by the Operator to deploy OES
-- licenses: The license this is under
 - scripts: Example, and test scripts used to deploy OES' Custom Resource Definition based

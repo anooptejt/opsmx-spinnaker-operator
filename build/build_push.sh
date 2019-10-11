@@ -5,7 +5,7 @@
 name="spinnaker-operator"
 ver="1.16.0-1"
 dfile="build/Dockerfile"
-repo="zappo"
+repos="zappo,devopsmx"
 keys=$HOME/.keys
 latest="${repo}/${name}:latest"
 image="${repo}/${name}:${ver}"
@@ -44,8 +44,5 @@ docker tag $latest $rhelImage
 
 docker push $latest
 docker push $image
-
-exit 0
-
 pushRemote $rhelRepo $rhelUser $rhelCredsFile $rhelImage
 pushRemote $gcrRepo $gcrUser $gcrCredsFile $gcrImage

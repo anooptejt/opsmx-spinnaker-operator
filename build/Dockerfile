@@ -9,5 +9,5 @@ LABEL description='Open Enterprise Spinnaker is an Enterprise grade, Red Hat cer
 LABEL maintainer='delivery-engineering@opsmx.io'
 
 COPY helm-charts/ ${HOME}/helm-charts/
-COPY watches.yaml ${HOME}/watches.yaml
-COPY licenses /licenses
+COPY build/watches.yaml ${HOME}/watches.yaml
+COPY build/licenses /licenses
