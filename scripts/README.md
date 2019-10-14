@@ -78,4 +78,20 @@ Usage: ./clean.sh [OPTION...]
   -h|--help                 This usage
 
 e.g., ./clean.sh -t kubectl
+
+```
+
+# push_to_quay.sh
+A script that pushes the application bundle to Quay using the operator-courier.
+
+```
+Usage: ./push_to_quay.sh [OPTION...]
+  -b|--operator-bundle=DIR  Location of the Operator bundle to upload to Quay
+  -n|--poackage-name=STRING The name of the application bundle
+  -u|--quay-user=STRING     Username of the quay account to retrieve the auth token
+  -p|--quay-password=STRING Password for the quay account to retrieve the auth token
+  -V|--version=VERSION      Version of the Operator Application to tag in the upload
+  -v|--verbose              Does nothing
+  -h|--help                 This usage
+  e.g., ./push_to_quay.sh -b ../bundle -u devopsmx -p 'password' -V 1.16.0 -n open-enterprise-spinnaker
 ```
