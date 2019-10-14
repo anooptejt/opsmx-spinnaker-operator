@@ -72,6 +72,7 @@ e.g., ./deploy.sh -t kubectl
 ```
 Usage: ./clean.sh [OPTION...]
   -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, none
+  -n|--namespace=STRING     The namespace to work one, if none provided the namespace.yml file is used
   -f|--force-crd-delete     Use with caution, may make you unhappy, however sometimes CRDs don't go..
   -d|--rmi                  Remove the docker images
   -v|--verbose              Does nothing

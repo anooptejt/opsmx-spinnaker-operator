@@ -90,4 +90,4 @@ operator-courier push \
     "$QUAY_NAMESPACE" \
     "$PACKAGE_NAME" \
     "$PACKAGE_VERSION" \
-    "$TOKEN"
+    \"$TOKEN\"

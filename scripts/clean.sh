@@ -17,6 +17,11 @@ while [ "$1" != "" ]; do
     -v|--verbose)
         verbose=1
         ;;
+    -n|--namespace)
+        shift
+        ns=$1
+        gaveNs=1
+        ;;
     -h|--help)
         $0
         exit
@@ -32,6 +37,7 @@ crd="openenterprisespinnakeroperators"
 usage() {
     echo "Usage: $0 [OPTION...]
   -t|--type=TYPE            Which mini binary to use: minikube, minishift, minispin, crc, none
+  -n|--namespace=STRING     The namespace to work one, if none provided the namespace.yml file is used
   -f|--force-crd-delete     Use with caution, may make you unhappy, however sometimes CRDs don't go..
   -d|--rmi                  Remove the docker images
   -v|--verbose              Does nothing
@@ -57,11 +63,13 @@ elif [ "$type" == "kubectl" -o "$type" == "oc" ]; then
     mini=""
 fi
 
-ns=$(cat ./namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
+if [ -z "$ns" ]; then
+    ns=$(cat ./namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
+fi
 ncrd=$($kcmd get crds | grep $crd | awk '{ print $1 }')
 if [ "$?" == "0" ]; then
     # patch so delete gets easy...
-    if [ "force" == "1" ]; then
+    if [ "$force" == "1" ]; then
         $kcmd delete crds/$ncrd &
         $kcmd patch crds/$ncrd -p '{"metadata":{"finalizers":[]}}' --type=merge
     fi
@@ -109,5 +117,7 @@ if [ "$rmi" == "1" ]; then
         done
     fi
 fi
-$kcmd -n $ns delete -f ./namespace.yaml
-rm ./namespace.yaml
+if [ -e "namespaces.yaml" -a "$gaveNs" != "1" ]; then
+    $kcmd -n $ns delete -f ./namespace.yaml
+    rm ./namespace.yaml
+fi
