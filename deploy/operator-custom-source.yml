@@ -6,5 +6,5 @@ metadata:
 spec:
   type: appregistry
   displayName: Validated Operators
-  registryNamespace: zappo
+  registryNamespace: devopsmx
   endpoint: https://quay.io/cnr

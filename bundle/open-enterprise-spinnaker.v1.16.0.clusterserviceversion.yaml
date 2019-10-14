@@ -5,7 +5,7 @@ metadata:
     capabilities: Basic Install
     categories: "Integration & Delivery"
     certified: "true"
-    containerImage: docker.io/zappo/spinnaker-operator:1.16.0-1
+    containerImage: docker.io/devopsmx/spinnaker-operator:1.16.0-1
     description: Spinnaker is an Open Source, multi-cloud Continuous delivery platform to perform software releases with high velocity and confidence.
     support: OpsMx
     createdAt: 2019-04-08T19:49:35Z
@@ -22,7 +22,7 @@ metadata:
       "halyard": {
         "spinnakerVersion": "1.16.0",
         "image": {
-          "repository": "zappo/ubi8-oes-operator-halyard",
+          "repository": "devopsmx/ubi8-oes-operator-halyard",
           "tag": "1.16.0-1"
         }
       },
@@ -122,7 +122,7 @@ spec:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: open-enterprise-spinnaker
-                image: docker.io/zappo/spinnaker-operator:1.16.0-1
+                image: docker.io/devopsmx/spinnaker-operator:1.16.0-1
                 imagePullPolicy: Always
                 name: open-enterprise-spinnaker
                 resources: {}

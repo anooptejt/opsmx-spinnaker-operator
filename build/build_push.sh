@@ -5,16 +5,20 @@
 name="spinnaker-operator"
 ver="1.16.0-1"
 dfile="build/Dockerfile"
-repos="zappo,devopsmx"
 keys=$HOME/.keys
+repo="devopsmx"
 latest="${repo}/${name}:latest"
 image="${repo}/${name}:${ver}"
 
-rhelReg="scan.connect.redhat.com"
-rhelPid="25590a91-d935-4720-ba5a-3b1756c0add1"
-rhelImage="${rhelReg}/ospid-${rhelPid}/${name}:${ver}"
-rhelUser="unused"
-rhelCredsFile="${keys}/pidkey-${rhelPid}"
+dockerReg="docker.io"
+dockerCredsFile=$keys/${repo}.auth
+dockerUser=$repo
+
+rhReg="scan.connect.redhat.com"
+rhPid="25590a91-d935-4720-ba5a-3b1756c0add1"
+rhImage="${rhReg}/ospid-${rhPid}/${name}:${ver}"
+rhUser="unused"
+rhCredsFile="${keys}/pidkey-${rhPid}"
 
 gcrReg="gcr.io"
 gcrRepo="opsmx-images"
@@ -28,21 +32,17 @@ pushRemote() {
   credsFile=$3
   image=$4
 
-  store="{ \"ServerURL\": \"$rhelRepo\", \"Username\": \"$user\", \"Secret\": \"$(cat ${credsFile})\"}"
-  store=$(echo $store | sed -e s/\'/\"/g)
-  docker-credential-secretservice store <<_EOF
-  $store
-_EOF
+  cat $credsFile | docker login --username $user --password-stdin $repo
   docker push $image
 }
 
 cd ..
 docker build -t $latest -f ${dfile} .
 docker build -t $image -f ${dfile} .
-docker tag $latest $rhelImage
+docker tag $latest $rhImage
 # docker tag $latest $gcrImage
 
-docker push $latest
-docker push $image
-pushRemote $rhelRepo $rhelUser $rhelCredsFile $rhelImage
-pushRemote $gcrRepo $gcrUser $gcrCredsFile $gcrImage
+pushRemote $dockerReg $dockerUser $dockerCredsFile $image
+pushRemote $dockerReg $dockerUser $dockerCredsFile $latest
+# pushRemote $rhReg $rhUser $rhCredsFile $rhImage
+# pushRemote $gcrRepo $gcrUser $gcrCredsFile $gcrImage

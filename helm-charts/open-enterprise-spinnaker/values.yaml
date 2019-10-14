@@ -1,7 +1,7 @@
 halyard:
   spinnakerVersion: 1.15.1
   image:
-    repository: zappo/ubi8-oes-operator-halyard
+    repository: devopsmx/ubi8-oes-operator-halyard
     tag: 1.15.1-1
   # Provide a config map with Hal commands that will be run the core config (storage)
   # The config map should contain a script in the config.sh key
