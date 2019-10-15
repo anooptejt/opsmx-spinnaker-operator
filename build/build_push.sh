@@ -58,9 +58,9 @@ pushRemote() {
 
 setArtifactRepo() {
     url=$1
-    files=$(find . -type f -name service-settings.*.yaml)
+    files=$(find . -type f -name service-settings*.yaml)
     for f in $files; do
-        perl -pi -e "s/(\s+artifactId:)\s+.*(ubi8.*)/\$1 ${url}/\$2/g"
+        perl -pi -e "s/(\s+artifactId:)\s+.*(ubi8.*)/\$1 ${url}\/\$2/g" $f
     done
 }
 
@@ -101,3 +101,5 @@ if [ "$pushRh" == "1" ]; then
     docker build -t $rhImage -f ${dfile} .
     pushRemote $rhReg $rhUser $rhCredsFile $rhImage
 fi
+# back to "normal"
+setArtifactRepo $repo
