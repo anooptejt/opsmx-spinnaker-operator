@@ -56,6 +56,14 @@ pushRemote() {
     docker push $image
 }
 
+setArtifactRepo() {
+    url=$1
+    files=$(find . -type f -name service-settings.*.yaml)
+    for f in $files; do
+        perl -pi -e "s/(\s+artifactId:)\s+.*(ubi8.*)/\$1 ${url}/\$2/g"
+    done
+}
+
 name=${name:-spinnaker-operator}
 keys=${keys:-$HOME/.keys}
 dfile="build/Dockerfile"
@@ -73,12 +81,6 @@ rhImage="${rhReg}/ospid-${rhPid}/${name}:${ver}"
 rhUser="unused"
 rhCredsFile="${keys}/pidkey-${rhPid}"
 
-gcrReg="gcr.io"
-gcrRepo="opsmx-images"
-gcrImage="${gcrReg}/${gcrExt}/${name}:${ver}"
-gcrUser="opsmxadm@gmail.com"
-gcrCredsFile="${keys}/gcr.auth"
-
 if [ -z "$ver" ];then
     usage
     exit 1
@@ -87,13 +89,15 @@ fi
 cd ..
 docker build -t $latest -f ${dfile} .
 docker build -t $image -f ${dfile} .
-# docker tag $latest $gcrImage
 if [ "$pushDock" == "1" ];then
-    pushRemote $dockerReg $dockerUser $dockerCredsFile $image
-    pushRemote $dockerReg $dockerUser $dockerCredsFile $latest
+    setArtifactRepo $repo
+    for name in $latest $image; do
+        docker build -t $name -f ${dfile} .
+        pushRemote $dockerReg $dockerUser $dockerCredsFile $name
+    done
 fi
 if [ "$pushRh" == "1" ]; then
-    docker tag $latest $rhImage
+    setArtifactRepo "registry.connect.redhat.com\/opsmx"
+    docker build -t $rhImage -f ${dfile} .
     pushRemote $rhReg $rhUser $rhCredsFile $rhImage
 fi
-# pushRemote $gcrRepo $gcrUser $gcrCredsFile $gcrImage
