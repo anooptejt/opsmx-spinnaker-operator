@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 #
 # Builds the spinnaker operator and pushes it to selected repos
 #
@@ -22,6 +22,9 @@ while [ "$1" != "" ]; do
         shift
         ver=$1
         ;;
+    -v|--verbose)
+        verbose=1
+        ;;
     -h|--help)
         $0
         exit 1
@@ -40,7 +43,7 @@ usage() {
   -r|--push-redhat          Push to the Red Hat registry
   -d|--push-docker          Push to the Docker registry
   -V|--version=VERSION      Version to tag the image with
-  -v|--verbose              Does nothing
+  -v|--verbose              Verbose output
   -h|--help                 This usage
   e.g., $0 -o spinnaker-operator -k $HOME/.keys -r -p -V 1.16.0-1
 "
@@ -60,7 +63,15 @@ setArtifactRepo() {
     url=$1
     files=$(find . -type f -name service-settings*.yaml)
     for f in $files; do
+        before=$(grep "artifactId:" $f)
         perl -pi -e "s/(\s+artifactId:)\s+.*(ubi8.*)/\$1 ${url}\/\$2/g" $f
+        after=$(grep "artifactId:" $f)
+        if [ "$verbose" == 1 ]; then
+            echo "Before repo replace: "
+            echo $before
+            echo "After repo replace: "
+            echo $after
+        fi
     done
 }
 
@@ -97,9 +108,8 @@ if [ "$pushDock" == "1" ];then
     done
 fi
 if [ "$pushRh" == "1" ]; then
-    setArtifactRepo "registry.connect.redhat.com\/opsmx"
+    setArtifactRepo 'registry.connect.redhat.com\/opsmx'
     docker build -t $rhImage -f ${dfile} .
     pushRemote $rhReg $rhUser $rhCredsFile $rhImage
+    setArtifactRepo $repo
 fi
-# back to "normal"
-setArtifactRepo $repo

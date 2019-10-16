@@ -4,7 +4,7 @@
 #
 while [ "$1" != "" ]; do
     case $1 in
-    -b|--operator-bundle)
+    -b|--bundle-location)
         shift
         location=$1
         ;;
@@ -24,6 +24,10 @@ while [ "$1" != "" ]; do
         shift
         version=$1
         ;;
+    -r|--make-redhat-bundle)
+        rhbundle=1
+        rhbundir="rh"
+        ;;
     -h|--help)
         $0
         exit 1
@@ -37,8 +41,9 @@ done
 
 usage() {
   echo "Usage: $0 [OPTION...]
-  -b|--operator-bundle=DIR  Location of the Operator bundle to upload to Quay
-  -n|--poackage-name=STRING The name of the application bundle
+  -b|--bundle-location=DIR  Location of the Operator bundle to upload to Quay
+  -r|--make-redhat-bundle   Flag that sets the creation of a zipped redhat bundle (urls)
+  -n|--package-name=STRING  The name of the application bundle
   -u|--quay-user=STRING     Username of the quay account to retrieve the auth token
   -p|--quay-password=STRING Password for the quay account to retrieve the auth token
   -V|--version=VERSION      Version of the Operator Application to tag in the upload
@@ -65,24 +70,37 @@ getToken() {
   echo ""
 }
 
+if [ -z "$location" -o -z "$package" -o -z "$version" ]; then
+    usage
+    exit 3
+fi
+
+if [ "$rhbundle" == "1" ]; then
+    mkdir $rhbundir
+    OPWD=$PWD
+    cp $location/* $rhbundir/
+    cd $rhbundir
+    sed -i s#docker.io/devopsmx#registry.connect.redhat.com/opsmx# *.yaml
+    zip -r ${rhbundir}-$version.zip .
+    mv *.zip $OPWD
+    cd ..
+    rm -rf rh
+    exit 0
+fi
+
 x=$(which operator-courier)
 if [ "$?" != "0" ];then
     echo "Pushing requires the operator-courier, e.g., pip install operator-courier"
     exit 1
 fi
-if [ -z "$location" -o -z "$user" -o -z "$package" -o -z "$version" ]; then
-  usage
-  exit 3
-fi
-
 export OPERATOR_DIR=$location
 export QUAY_NAMESPACE=$user
 export PACKAGE_NAME=$package
 export PACKAGE_VERSION=$version
 export TOKEN=$(getToken $user $password)
 if [ -z "$TOKEN" ]; then
-  echo "Empty token, authentication failed!"
-  exit 2
+    echo "Empty token, authentication failed!"
+    exit 2
 fi
 
 operator-courier push \

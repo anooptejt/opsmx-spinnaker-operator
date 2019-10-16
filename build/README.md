@@ -1,7 +1,7 @@
 This directory contains the Dockerfile, and a push script for the Operator Container
 
 # build_push.sh
-Builds the container and pushes it to its specific Red Hat and Docker registry.
+Builds the container and pushes it to its specific Red Hat and Docker registry. THe script replaces the artifactId based container images in the service-settings-...yml based on were it pushes it.
 
 Usage: ./build_push [OPTION...]
 -o|--operator-name=STRING Name of the operator container

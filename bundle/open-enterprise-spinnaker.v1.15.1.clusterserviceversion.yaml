@@ -22,7 +22,7 @@ metadata:
       "halyard": {
         "spinnakerVersion": "1.15.1",
         "image": {
-          "repository": "devopsmx/ubi8-oes-operator-halyard",
+          "repository": "docker.io/devopsmx/ubi8-oes-operator-halyard",
           "tag": "1.15.1-1"
         }
       },
