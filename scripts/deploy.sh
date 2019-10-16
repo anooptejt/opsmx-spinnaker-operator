@@ -70,7 +70,11 @@ $kcmd create -f ../deploy/service_account.yaml -n $ns
 $kcmd create -f ../deploy/role.yaml -n $ns
 $kcmd create -f ../deploy/role_binding.yaml -n $ns
 $kcmd create -f ../deploy/operator.yaml -n $ns
-$kcmd create -f ../deploy/crds/deploy-oes.yaml -n $ns
+if [ -f "../deploy/crds/deploy-oes-${version}.yaml" ]; then
+  $kcmd create -f ../deploy/crds/deploy-oes-${version}.yaml -n $ns
+else
+  $kcmd create -f ../deploy/crds/deploy-oes.yaml -n $ns
+fi
 
 TRUE=true
 while $TRUE; do
