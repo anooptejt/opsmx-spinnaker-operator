@@ -1,0 +1,51 @@
+apiVersion: charts.helm.k8s.io/v1alpha1
+kind: OpenEnterpriseSpinnakerOperator
+metadata:
+  name: oes
+  namespace: openshift-operators
+spec:
+  halyard:
+    spinnakerVersion: 1.15.1
+    image:
+      repository: devopsmx/ubi8-oes-operator-halyard
+      tag: 1.15.1-3
+  dockerRegistries:
+    - name: dockerhub
+      address: index.docker.io
+      repositories:
+        - library/alpine
+        - library/ubuntu
+        - library/centos
+        - library/nginx
+  spinnakerFeatureFlags:
+    - artifacts
+    - jobs
+  minio:
+    enabled: true
+    imageTag: RELEASE.2019-09-18T21-55-05Z
+    serviceType: ClusterIP
+    accessKey: spinnakeradmin
+    secretKey: spinnakeradmin
+    bucket: spinnaker
+    nodeSelector: {}
+    persistence:
+      enabled: false
+  rbac:
+    create: true
+  serviceAccount:
+    create: true
+    halyardName: open-enterprise-spinnaker
+    spinnakerName: null
+  ingress:
+    enabled: true
+    host: spinnaker.apps-crc.testing
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: 'false'
+      kubernetes.io/ingress.class: LoadBalancer
+  ingressGate:
+    enabled: true
+    host: gate.spinnaker.apps-crc.testing
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: 'false'
+      kubernetes.io/ingress.class: LoadBalancer
+

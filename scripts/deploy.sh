@@ -70,11 +70,16 @@ $kcmd create -f ../deploy/service_account.yaml -n $ns
 $kcmd create -f ../deploy/role.yaml -n $ns
 $kcmd create -f ../deploy/role_binding.yaml -n $ns
 $kcmd create -f ../deploy/operator.yaml -n $ns
-if [ -f "../deploy/crds/deploy-oes-${version}.yaml" ]; then
-  $kcmd create -f ../deploy/crds/deploy-oes-${version}.yaml -n $ns
+deployFile="../deploy/crds/deploy-oes-${version}.yaml"
+if [ -f "$deployFile" ]; then
+    echo "Deploying $version"
+    $kcmd create -f $deployFile -n $ns
 else
-  $kcmd create -f ../deploy/crds/deploy-oes.yaml -n $ns
+    echo "Deploying default"
+    deployFile="../deploy/crds/deploy-oes.yaml"
+    $kcmd create -f $deployFile -n $ns
 fi
+
 
 TRUE=true
 while $TRUE; do
@@ -104,7 +109,7 @@ while $TRUE; do
 done
 
 HALPOD=$($kcmd -n $ns get pods | grep halyard | awk '{ print $1 }')
-ingress=$(egrep "ingress:|ingressGate:" ../deploy/crds/deploy-oes.yaml | wc -l)
+ingress=$(egrep "ingress:|ingressGate:" $deployFile | wc -l)
 
 if [ "$mini" != "" ]; then
     IP=$($mini ip)
@@ -127,7 +132,7 @@ if [ "$ingress" != "2" -a "$IP" != "" ]; then
 elif [ "$ingress" == "2" ]; then
     echo "Ingress configured"
     NodePort="80"
-    ingressHostName=$(grep host: ../deploy/crds/deploy-oes.yaml  | head -1 | awk '{ print $2 }')
+    ingressHostName=$(grep host: $deployFile  | head -1 | awk '{ print $2 }')
     curlopts="-H $ingressHostName "
     LISTENER=$ingressHostName
 else
@@ -143,16 +148,20 @@ curlopts+="--connect-timeout 2 \
     --retry-delay 2 \
     --retry-max-time 5"
 SECONDS=0
-while $TRUE; do
-    delta=$SECONDS
-    echo -ne "Waiting for gate to respond: ${delta}s\r"
-    res=$(curl -s $curlopts http://$LISTENER/gate/projects)
-    if [ "$?" == "0" ]; then
-        echo $res | egrep "500|404"
-        if [ "$?" == "1" ]; then
-            TRUE=false
-        fi
-    fi
-    sleep 1
-done
+
+if [ "$ingressHostName" != "$LISTENER" ];then 
+    echo probing $ingressHostName on http://$LISTENER/gate/projects
+    while $TRUE; do
+        delta=$SECONDS
+        echo -ne "Waiting for gate to respond: ${delta}s\r"
+        res=$(curl -s $curlopts http://$LISTENER/gate/projects)
+        if [ "$?" == "0" ]; then
+            echo $res | egrep "500|404"
+            if [ "$?" == "1" ]; then
+                TRUE=false
+           fi
+       fi
+       sleep 1
+    done
+fi
 echo "Deck is running on http://$LISTENER/"
