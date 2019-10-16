@@ -54,20 +54,21 @@ usage() {
 }
 
 getToken() {
-  user=$1
-  pass=$2
-  token=$(curl -s -H "Content-Type: application/json" -XPOST https://quay.io/cnr/api/v1/users/login -d '
-  {
-      "user": {
-          "username": "'"${user}"'",
-          "password": "'"${pass}"'"
-      }
-  }')
-  tok=$(echo $token | awk -F: '{ print $2 }'| sed -e s/}//)
-  if [[ $tok =~ "basic " ]]; then
-    echo $tok
-  fi
-  echo ""
+    user=$1
+    pass=$2
+    token=$(curl -s -H "Content-Type: application/json" -XPOST https://quay.io/cnr/api/v1/users/login -d '
+    {
+        "user": {
+            "username": "'"${user}"'",
+            "password": "'"${pass}"'"
+        }
+    }')
+    tok=$(echo $token | awk -F: '{ print $2 }'| sed -e s/[\"}]//g)
+    if [[ $tok =~ "basic " ]]; then
+        echo $tok 
+        # | sed -e s/' '/'\\ '/g
+    fi
+    echo ""
 }
 
 if [ -z "$location" -o -z "$package" -o -z "$version" ]; then
@@ -103,7 +104,7 @@ if [ -z "$TOKEN" ]; then
     exit 2
 fi
 
-operator-courier push \
+eval operator-courier push \
     "$OPERATOR_DIR" \
     "$QUAY_NAMESPACE" \
     "$PACKAGE_NAME" \
