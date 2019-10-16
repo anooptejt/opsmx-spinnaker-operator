@@ -30,7 +30,7 @@ while [ "$1" != "" ]; do
     shift
 done
 ns=${ns:-spin}
-version=${version:-1.15.1}
+version=${version:-1.16.0}
 
 usage() {
   echo "Usage: $0 [OPTION...]
