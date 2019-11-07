@@ -67,7 +67,7 @@ if [ -z "$ns" ]; then
     ns=$(cat ./namespace.yaml | jq '.metadata.name' | sed -e s/\"//g)
 fi
 ncrd=$($kcmd get crds | grep $crd | awk '{ print $1 }')
-if [ "$?" == "0" ]; then
+if [ "$?" == "0" -a "$mini" != "crc" ]; then
     # patch so delete gets easy...
     if [ "$force" == "1" ]; then
         $kcmd delete crds/$ncrd &
@@ -76,13 +76,19 @@ if [ "$?" == "0" ]; then
     $kcmd delete crds/$ncrd
 
 fi
-deployments=$(kubectl get deployments -n $ns | grep -v NAME | awk '{ print $1 }')
+deployments=$($kcmd get deployments -n $ns | grep -v NAME | awk '{ print $1 }')
 if [ "$deployments" != "" ]; then
     $kcmd -n $ns delete deployments $deployments
 fi
-svcs=$(kubectl get svc -n $ns | grep -v NAME | awk '{ print $1 }')
+svcs=$($kcmd get svc -n $ns | grep -v NAME | awk '{ print $1 }')
 for svc in $svcs; do
     $kcmd -n $ns delete svc $svc
+done
+
+# needs to become a var, the spin that is...
+secrets=$($kcmd get secrets -n $ns | grep -v NAME | grep Opaque | grep spin | awk '{ print $1}')
+for secret in $secrets; do
+    $kcmd -n $ns delete secret $secret
 done
 
 $kcmd -n $ns delete -f  "../deploy/service_account.yaml"
