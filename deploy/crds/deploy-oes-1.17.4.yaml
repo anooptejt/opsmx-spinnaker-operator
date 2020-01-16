@@ -1,0 +1,40 @@
+apiVersion: charts.helm.k8s.io/v1alpha1
+kind: OpenEnterpriseSpinnakerOperator
+metadata:
+  name: oes
+spec:
+  halyard:
+    spinnakerVersion: 1.17.4
+    image:
+      repository: devopsmx/ubi8-oes-operator-halyard
+      tag: 1.17.4
+  dockerRegistries:
+    - name: dockerhub
+      address: index.docker.io
+      repositories:
+        - library/alpine
+        - library/ubuntu
+        - library/centos
+        - library/nginx
+  spinnakerFeatureFlags:
+    - artifacts
+    - artifacts-rewrite
+    - chaos
+    - deployment
+    - gremlin
+    - infrastructure-stages
+    - mine-canary
+    - no-validate
+    - pipeline-templates
+    - travis
+    - wercker
+  minio:
+    enabled: true
+    persistence:
+      enabled: false
+  rbac:
+    create: false
+  serviceAccount:
+    create: false
+    halyardName: open-enterprise-spinnaker
+    spinnakerName: null

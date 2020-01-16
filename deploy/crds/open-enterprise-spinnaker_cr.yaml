@@ -6,10 +6,10 @@ spec:
   # Default values copied from <project_dir>/helm-charts/opsmx-spinnaker-operator/values.yaml
 
   halyard:
-    spinnakerVersion: 1.15.1
+    spinnakerVersion: 1.17.4
     image:
       repository: devopsmx/ubi8-oes-operator-halyard
-      tag: 1.15.1-1
+      tag: 1.17.4
     # Provide a config map with Hal commands that will be run the core config (storage)
     # The config map should contain a script in the config.sh key
     additionalScripts:

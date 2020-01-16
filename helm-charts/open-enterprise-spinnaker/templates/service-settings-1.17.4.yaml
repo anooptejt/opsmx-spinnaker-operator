@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "spinnaker.fullname" . }}-service-settings-1.17.4
+  labels:
+{{ include "spinnaker.standard-labels" . | indent 4 }}
+data:
+  redis.yml: |-
+    artifactId: devopsmx/ubi8-oes-redis:4.0.14
+    enabled: true
+  gate.yml: |-
+    kubernetes:
+    {{- if .Values.ingress.enabled }}
+      useExecHealthCheck: false
+      serviceType: NodePort
+    {{- end }}
+    artifactId: devopsmx/ubi8-oes-gate:version-1.13.0
+    host: 0.0.0.0
+  deck.yml: |-
+    host: 0.0.0.0
+    artifactId: devopsmx/ubi8-oes-deck:version-2.13.3
+    env:
+      API_HOST: http://spin-gate.{{ .Release.Namespace }}:8084
+    kubernetes:
+    {{- if .Values.ingress.enabled }}
+      useExecHealthCheck: false
+      serviceType: NodePort
+    {{- end }}
+  front50.yml: |-
+    artifactId: devopsmx/ubi8-oes-front50:version-0.20.1
+  fiat.yml: |-
+    artifactId: devopsmx/ubi8-oes-fiat:version-1.8.0
+  clouddriver.yml: |-
+    artifactId: devopsmx/ubi8-oes-clouddriver:version-6.4.3
+  orca.yml: |-
+    artifactId: devopsmx/ubi8-oes-orca:version-2.11.2
+  rosco.yml: |-
+    artifactId: devopsmx/ubi8-oes-rosco:version-0.15.0
+  igor.yml: |-
+    artifactId: devopsmx/ubi8-oes-igor:version-1.7.0
+  kayenta.yml: |-
+    artifactId: devopsmx/ubi8-oes-kayenta:version-0.12.0
+  echo.yml: |-
+    artifactId: devopsmx/ubi8-oes-echo:version-2.9.0
