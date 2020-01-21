@@ -28,6 +28,8 @@ spec:
     - pipeline-templates
     - travis
     - wercker
+    - pipelinetemplates
+    - managedpipelinetemplatesv2ui
   minio:
     enabled: true
     persistence:
