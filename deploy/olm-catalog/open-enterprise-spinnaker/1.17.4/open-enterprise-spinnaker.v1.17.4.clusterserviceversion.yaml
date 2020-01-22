@@ -41,14 +41,13 @@ metadata:
         "artifacts",
         "artifacts-rewrite",
         "chaos",
-        "deployment",
         "gremlin",
         "infrastructure-stages",
         "mine-canary",
-        "no-validate",
         "pipeline-templates",
         "travis",
-        "wercker"
+        "wercker",
+        "managed-pipeline-templates-v2-ui"
       ],
       "minio": {
         "enabled": true,

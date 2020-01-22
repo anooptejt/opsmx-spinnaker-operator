@@ -117,19 +117,16 @@ ingressGate:
 #   - artifacts
 #   - pipeline-templates
 spinnakerFeatureFlags:
-  - artifacts
-  - artifacts-rewrite
-  - chaos
-  - deployment
-  - gremlin
-  - infrastructure-stages
-  - mine-canary
-  - no-validate
-  - pipeline-templates
-  - travis
-  - wercker- artifacts
-  - jobs
-
+    - artifacts
+    - artifacts-rewrite
+    - chaos
+    - gremlin
+    - infrastructure-stages
+    - mine-canary
+    - travis
+    - wercker
+    - pipeline-templates
+    - managed-pipeline-templates-v2-ui
 # Node labels for pod assignment
 # Ref: https://kubernetes.io/docs/user-guide/node-selection/
 # nodeSelector to provide to each of the Spinnaker components
