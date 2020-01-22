@@ -125,7 +125,15 @@ spec:
   #   - pipeline-templates
   spinnakerFeatureFlags:
     - artifacts
-    - jobs
+    - artifacts-rewrite
+    - chaos
+    - gremlin
+    - infrastructure-stages
+    - mine-canary
+    - travis
+    - wercker
+    - pipeline-templates
+    - managed-pipeline-templates-v2-ui
 
   # Node labels for pod assignment
   # Ref: https://kubernetes.io/docs/user-guide/node-selection/

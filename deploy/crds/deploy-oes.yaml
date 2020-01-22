@@ -18,7 +18,15 @@ spec:
         - library/nginx
   spinnakerFeatureFlags:
     - artifacts
-    - jobs
+    - artifacts-rewrite
+    - chaos
+    - gremlin
+    - infrastructure-stages
+    - mine-canary
+    - travis
+    - wercker
+    - pipeline-templates
+    - managed-pipeline-templates-v2-ui
   minio:
     enabled: true
     persistence:
