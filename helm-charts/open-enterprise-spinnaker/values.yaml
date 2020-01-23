@@ -167,7 +167,7 @@ minio:
   enabled: true
   image:
     repository: registry.connect.redhat.com/ubi8-oes-minio
-    tag: RELEASE.2018-06-09T02-18-09Z
+    tag: RELEASE.2019-09-18T21-55-05Z
   serviceType: ClusterIP
   accessKey: spinnakeradmin
   secretKey: spinnakeradmin

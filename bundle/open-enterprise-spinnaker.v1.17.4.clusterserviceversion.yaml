@@ -48,7 +48,6 @@ metadata:
       ],
       "minio": {
         "enabled": true,
-        "imageTag": "RELEASE.2019-09-18T21-55-05Z",
         "serviceType": "ClusterIP",
         "accessKey": "spinnakeradmin",
         "secretKey": "spinnakeradmin",
