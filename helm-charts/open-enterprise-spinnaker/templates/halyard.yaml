@@ -31,7 +31,11 @@ spec:
 #        fsGroup: 1000130000
       initContainers:
       - name: "create-halyard-local"
-        image: {{ .Values.halyard.image.repository }}:{{ .Values.halyard.image.tag }}
+        {{- if .Values.halyard.repository }}
+        image: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.halyard }}
+        {{- else }}
+        image: {{ .Values.halyard.images.halyard }}
+        {{- end }}
         command:
         - bash
         - /tmp/initscript/init.sh
@@ -113,7 +117,11 @@ spec:
         args:
         - -c
         - 'sh /opt/halyard/scripts/install.sh & sh /opt/run_halyard.sh'
-        image: {{ .Values.halyard.image.repository }}:{{ .Values.halyard.image.tag }}
+        {{- if .Values.halyard.repository }}
+        image: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.halyard }}
+        {{- else }}
+        image: {{ .Values.halyard.images.halyard }}
+        {{- end }}
         ports:
         - containerPort: 8064
           name: daemon

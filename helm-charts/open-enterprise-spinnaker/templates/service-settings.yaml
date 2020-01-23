@@ -5,20 +5,25 @@ metadata:
   labels:
 {{ include "spinnaker.standard-labels" . | indent 4 }}
 data:
-  redis.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-redis:4.0.14
-    enabled: true
   gate.yml: |-
     kubernetes:
     {{- if .Values.ingress.enabled }}
       useExecHealthCheck: false
       serviceType: NodePort
     {{- end }}
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-gate:version-1.13.0-1
+  {{- if .Values.halyard.repository }}
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.deck }}
+  {{- else }}
+    artifactId: {{ .Values.halyard.images.deck }}
+  {{- end }}
     host: 0.0.0.0
   deck.yml: |-
     host: 0.0.0.0
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-deck:deck-2.13.3
+  {{- if .Values.halyard.repository }}
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.deck }}
+  {{- else }}
+    artifactId: {{ .Values.halyard.images.deck }}
+  {{- end }}
     env:
       API_HOST: http://spin-gate.{{ .Release.Namespace }}:8084
     kubernetes:
@@ -26,19 +31,44 @@ data:
       useExecHealthCheck: false
       serviceType: NodePort
     {{- end }}
+  {{- if .Values.halyard.repository }}
   front50.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-front50:version-0.20.1-1
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.front50 }}
   fiat.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-fiat:version-1.8.0-1
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.fiat }}
   clouddriver.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-clouddriver:version-6.4.3-1
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.clouddriver }}
   orca.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-orca:version-2.11.2-1
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.orca }}
   rosco.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-rosco:version-0.15.0-1
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.rosco }}
   igor.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-igor:version-1.7.0-1
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.igor }}
   kayenta.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-kayenta:version-0.12.0-1
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.kayenta }}
   echo.yml: |-
-    artifactId: registry.connect.redhat.com/opsmx/ubi8-oes-echo:version-2.9.0-1
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.echo }}
+  redis.yml: |-
+    artifactId: {{ .Values.halyard.repository }}/{{ .Values.halyard.images.redis }}
+    enabled: true
+  {{- else }}
+  front50.yml: |-
+    artifactId: {{ .Values.halyard.images.front50 }}
+  fiat.yml: |-
+    artifactId: {{ .Values.halyard.images.fiat }}
+  clouddriver.yml: |-
+    artifactId: {{ .Values.halyard.images.clouddriver }}
+  orca.yml: |-
+    artifactId: {{ .Values.halyard.images.orca }}
+  rosco.yml: |-
+    artifactId: {{ .Values.halyard.images.rosco }}
+  igor.yml: |-
+    artifactId: {{ .Values.halyard.images.igor }}
+  kayenta.yml: |-
+    artifactId: {{ .Values.halyard.images.kayenta }}
+  echo.yml: |-
+    artifactId: {{ .Values.halyard.images.echo }}
+  redis.yml: |-
+    artifactId: {{ .Values.halyard.images.redis }}
+    enabled: true
+  {{- end }}
