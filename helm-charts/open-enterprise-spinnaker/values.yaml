@@ -1,6 +1,9 @@
 halyard:
   spinnakerVersion: 1.17.4
+  # The default registry, and repository that is used
   repository: registry.connect.redhat.com/opsmx
+  # The images for each service that is present in the service-settings
+  # if these are missing the default gravitates to what's in the BOM (gcr)
   images:
     halyard: ubi8-oes-operator-halyard:1.17.4-2
     deck: ubi8-oes-deck:deck-2.13.3
@@ -165,6 +168,8 @@ redis:
 # Minio is not exposed publically
 minio:
   enabled: true
+  # Using the Minio helm chart image format enables us to override
+  # their default image
   image:
     repository: registry.connect.redhat.com/opsmx/ubi8-oes-minio
     tag: RELEASE.2019-09-18T21-55-05Z
