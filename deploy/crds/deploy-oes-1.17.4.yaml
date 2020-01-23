@@ -7,7 +7,7 @@ spec:
     spinnakerVersion: 1.17.4
     image:
       repository: registry.connect.redhat.com/opsmx/ubi8-oes-operator-halyard
-      tag: 1.17.4-2
+      tag: 1.17.4-5
   dockerRegistries:
     - name: dockerhub
       address: index.docker.io

@@ -1,7 +1,7 @@
 ## Set default image, imageTag, and imagePullPolicy. mode is used to indicate the
 ##
 image:
-  repository: devopsmx/ubi8-oes-minio
+  repository: registry.connect.redhat.com/opsmx/ubi8-oes-minio
   tag: version-09082019
   pullPolicy: IfNotPresent
 
