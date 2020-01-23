@@ -166,7 +166,7 @@ redis:
 minio:
   enabled: true
   image:
-    repository: zappo/ubi8-oes-minio
+    repository: registry.connect.redhat.com/ubi8-oes-minio
     tag: RELEASE.2018-06-09T02-18-09Z
   serviceType: ClusterIP
   accessKey: spinnakeradmin
