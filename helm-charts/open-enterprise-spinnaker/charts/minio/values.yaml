@@ -2,7 +2,11 @@
 ##
 image:
   repository: registry.connect.redhat.com/opsmx/ubi8-oes-minio
+<<<<<<< HEAD
   tag: RELEASE.2019-09-18T21-55-05Z
+=======
+  tag: version-09082019
+>>>>>>> opsmx/RHEL-Aswath-operator-1.17.4
   pullPolicy: IfNotPresent
 
 ## minio server mode, i.e. standalone or distributed.
