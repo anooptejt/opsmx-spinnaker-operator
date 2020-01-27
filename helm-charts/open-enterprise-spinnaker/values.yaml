@@ -1,8 +1,22 @@
 halyard:
   spinnakerVersion: 1.17.4
-  image:
-    repository: registry.connect.redhat.com/opsmx/ubi8-oes-operator-halyard
-    tag: 1.17.4-5
+  # The default registry, and repository that is used
+  repository: registry.connect.redhat.com/opsmx
+  # The images for each service that is present in the service-settings
+  # if these are missing the default gravitates to what's in the BOM (gcr)
+  images:
+    halyard: ubi8-oes-operator-halyard:1.17.4-2
+    deck: ubi8-oes-deck:deck-2.13.3
+    gate: ubi8-oes-gate:version-1.13.0-1
+    redis: ubi8-oes-redis:4.0.14
+    front50: ubi8-oes-front50:version-0.20.1-1
+    fiat: ubi8-oes-fiat:version-1.8.0-1
+    clouddriver: ubi8-oes-clouddriver:version-6.4.3-1
+    orca: ubi8-oes-orca:version-2.11.2-1
+    rosco: ubi8-oes-rosco:version-0.15.0-1
+    igor: ubi8-oes-igor:version-1.7.0-1
+    kayenta: ubi8-oes-kayenta:version-0.12.0-1
+    echo: ubi8-oes-echo:version-2.9.0-1
   # Provide a config map with Hal commands that will be run the core config (storage)
   # The config map should contain a script in the config.sh key
   additionalScripts:
@@ -154,7 +168,11 @@ redis:
 # Minio is not exposed publically
 minio:
   enabled: true
-  imageTag: RELEASE.2018-06-09T02-18-09Z
+  # Using the Minio helm chart image format enables us to override
+  # their default image
+  image:
+    repository: registry.connect.redhat.com/opsmx/ubi8-oes-minio
+    tag: RELEASE.2019-09-18T21-55-05Z
   serviceType: ClusterIP
   accessKey: spinnakeradmin
   secretKey: spinnakeradmin

@@ -5,7 +5,7 @@ metadata:
     capabilities: Basic Install
     categories: "Integration & Delivery"
     certified: "true"
-    containerImage: registry.connect.redhat.com/opsmx/spinnaker-operator:1.17.4-5
+    containerImage: registry.connect.redhat.com/opsmx/spinnaker-operator:1.17.4-6
     description: Spinnaker is an Open Source, multi-cloud Continuous delivery platform to perform software releases with high velocity and confidence.
     support: OpsMx
     createdAt: 2020-01-22T14:15:35Z
@@ -21,10 +21,13 @@ metadata:
     "spec": {
       "halyard": {
         "spinnakerVersion": "1.17.4",
+<<<<<<< HEAD
+=======
         "image": {
           "repository": "registry.connect.redhat.com/opsmx/ubi8-oes-operator-halyard",
           "tag": "1.17.4-5"
         }
+>>>>>>> opsmx/RHEL-Aswath-operator-1.17.4
       },
       "dockerRegistries": [
         {
@@ -52,7 +55,6 @@ metadata:
       ],
       "minio": {
         "enabled": true,
-        "imageTag": "RELEASE.2019-09-18T21-55-05Z",
         "serviceType": "ClusterIP",
         "accessKey": "spinnakeradmin",
         "secretKey": "spinnakeradmin",
@@ -130,7 +132,7 @@ spec:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: open-enterprise-spinnaker
-                image: registry.connect.redhat.com/opsmx/spinnaker-operator:1.17.4-5
+                image: registry.connect.redhat.com/opsmx/spinnaker-operator:1.17.4-6
                 imagePullPolicy: Always
                 name: open-enterprise-spinnaker
                 resources: {}

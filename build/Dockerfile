@@ -2,7 +2,7 @@ FROM quay.io/operator-framework/helm-operator:v0.10.0
 
 LABEL name='open-enterprise-spinnaker'
 LABEL vendor='OpsMx'
-LABEL release='2'
+LABEL release='test'
 LABEL version='1.17.4'
 LABEL summary='Red Hat certified Operator for deploying Red Hat certified Open Enterprise Spinnaker'
 LABEL description='Open Enterprise Spinnaker is an Enterprise grade, Red Hat certified and OpsMx supported release of the popular and critically acclaimed Continuous Delivery platform Spinnaker'
